@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+
+    compileSdkVersion Versions.compileSdkVersion
+
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    // Kotlin
+    implementation Kotlin.standardLibrary
+    // Android X
+    implementation AndroidX.core
+    implementation AndroidX.appCompat
+    // Dependency injection KOIN
+    implementation Koin.androidViewModel
+    // Coroutines
+    api Coroutines.core
+    api Coroutines.android
+    // Android X
+    implementation AndroidXLifecycle.lifecycleRuntimeKtx
+    implementation AndroidXLifecycle.lifecycleService
+    implementation AndroidXLifecycle.lifecycleLiveDataKtx
+    implementation AndroidXLifecycle.lifecycleViewModel
+    implementation AndroidXLifecycle.lifecycleExtensions
+    //Retrofit
+    implementation Retrofit.retrofit
+    implementation Retrofit.loggingInterceptor
+    implementation Moshi.kotlin
+    implementation Moshi.codegen
+    implementation Moshi.converter
+
+    // Testing
+    testImplementation Junit.junit
+    androidTestImplementation AndroidXTesting.junit
+    androidTestImplementation AndroidXTesting.espressoCore
+}

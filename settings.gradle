@@ -1,2 +1,5 @@
 include ':app'
+include ':data_source'
+include ':domain'
+include ':network'
 rootProject.name = "Counters Test"
