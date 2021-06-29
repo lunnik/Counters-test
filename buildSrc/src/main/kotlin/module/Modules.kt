@@ -6,7 +6,11 @@ object Modules {
 
     /* */
     const val domain: String = ":domain"
+
     /* */
     const val network: String = ":network"
+
+    /* */
+    const val counters: String = ":counters"
 
 }

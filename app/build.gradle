@@ -105,6 +105,7 @@ dependencies {
     implementation project(path: Modules.dataSource)
     implementation project(path: Modules.domain)
     implementation project(path: Modules.network)
+    implementation project(path: Modules.counters)
 
     // Testing
     testImplementation Junit.junit

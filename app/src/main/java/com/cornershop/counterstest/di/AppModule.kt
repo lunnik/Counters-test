@@ -4,6 +4,7 @@ import com.cornershop.counterstest.TestApp
 import com.example.data_source.data.httpClientModule
 import com.example.network.networkModule
 import com.cornershop.counterstest.di.data_source.shared_module.serverUrlProvider
+import com.example.counters.countersModule
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.Module
 
@@ -31,6 +32,7 @@ private fun getSharedModules(): List<Module> = listOf(
 
 /** */
 private fun getFeatureModules(): List<Module> = listOf(
+    countersModule
 
 )
 
