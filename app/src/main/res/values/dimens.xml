@@ -6,4 +6,17 @@
     <dimen name="margin_normal_1">16dp</dimen>
     <dimen name="margin_normal_2">24dp</dimen>
     <dimen name="margin_normal_3">32dp</dimen>
+    <!--margin vertical-->
+    <dimen name="margin_vertical">30dp</dimen>
+    <dimen name="half_margin_vertical">15dp</dimen>
+    <!--margin vertical-->
+    <dimen name="margin_lateral">16dp</dimen>
+    <dimen name="double_lateral">16dp</dimen>
+    <dimen name="triple_margin_lateral">48dp</dimen>
+
+    <!--button-->
+    <dimen name="button_icon_size">16dp</dimen>
+    <dimen name="button_text_size">15dp</dimen>
+    <dimen name="button_padding_lateral">18dp</dimen>
+    <dimen name="button_padding_vertical">20dp</dimen>
 </resources>

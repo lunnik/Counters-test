@@ -94,6 +94,10 @@ dependencies {
     implementation Room.roomKtx
     implementation Room.roomRuntime
     kapt(Room.roomCompiler)
+    //navigate
+    implementation AndroidXNavigation.fragmentKtx
+    implementation AndroidXNavigation.uiKtx
+    implementation AndroidXNavigation.navigationUI
 
     // Android X
     implementation AndroidX.constraintLayout

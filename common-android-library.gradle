@@ -60,7 +60,7 @@ dependencies {
     implementation Retrofit.retrofit
     implementation Retrofit.loggingInterceptor
     implementation Moshi.kotlin
-    implementation Moshi.codegen
+    kapt (Moshi.codegen)
     implementation Moshi.converter
 
     // Testing

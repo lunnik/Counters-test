@@ -52,4 +52,15 @@
     <string name="create_counter_disclaimer">Give it a name. Creative block? See examples.</string>
     <string name="delete_x_question">Delete "%s"?</string>
     <string name="n_per_counter_name">%d × %s</string>
+
+    <!--common-->
+    <string name="network_connection_failure_message">No cuentas con conexión a internet</string>
+    <string name="failure_message">Ocurrió un error: %s</string>
+
+    <!-- FAILURE: Common -->
+    <string name="failure_network_connection">No cuentas con conexión a internet</string>
+    <string name="failure_http_code">Código: %d - Mensaje: %s</string>
+    <string name="failure_unknown">Ocurrió un error: %s</string>
+
+    <!--home-->
 </resources>

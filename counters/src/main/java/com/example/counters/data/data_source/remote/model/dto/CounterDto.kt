@@ -8,9 +8,9 @@ import com.squareup.moshi.JsonClass
 /** */
 @JsonClass(generateAdapter = true)
 internal data class CounterDto(
-    @Json(name = "count") val count: Int,
-    @Json(name = "id") val id: String,
-    @Json(name = "title") val title: String
+    @field:Json(name = "count") val count: Int,
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "title") val title: String
 ) {
 
     /** */

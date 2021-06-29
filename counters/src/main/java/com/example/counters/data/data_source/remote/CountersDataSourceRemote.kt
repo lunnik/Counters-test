@@ -1,5 +1,6 @@
 package com.example.counters.data.data_source.remote
 
+import android.util.Log
 import com.example.data_source.data.exception.message
 import com.example.counters.data.CountersDataSource
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
@@ -20,12 +21,12 @@ internal class CountersDataSourceRemote(
 ) : CountersDataSource {
 
     /** */
-    override suspend fun getCounters(): Either<GetCountersFailure, GetCountersResponse> = try {
+    override suspend fun getCounters():
+            Either<GetCountersFailure, GetCountersResponse> = try {
         retrofitApiCall {
             countersApiService.getCounters()
         }.let { httpResponse ->
-            val counters = httpResponse.counters
-            Either.Right(GetCountersResponse(counters.map { it.toCounter() }))
+            Either.Right(GetCountersResponse(httpResponse.map { it.toCounter() }))
         }
     } catch (exception: Exception) {
         val failure: GetCountersFailure = when (exception) {

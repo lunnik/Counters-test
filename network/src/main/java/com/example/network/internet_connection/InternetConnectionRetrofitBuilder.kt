@@ -13,41 +13,22 @@ internal class InternetConnectionRetrofitBuilder {
 
     /* */
     private val baseUrl: String = "https://clients3.google.com/"
-    /* */
-    private val timeOut: Long = 5L
 
     /* */
-    private val bodyInterceptor =
-        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+    private val timeOut: Long = 100L
 
-
-    /**
-     *
-     */
-    fun build() : Retrofit =
+    /** */
+    fun build(): Retrofit =
         Retrofit.Builder()
             .client(buildHttpClient())
             .baseUrl(baseUrl)
             .build()
 
-    /**
-     *
-     */
-    private fun buildHttpClient() : OkHttpClient =
+    /** */
+    private fun buildHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(timeOut, TimeUnit.SECONDS)
             .readTimeout(timeOut, TimeUnit.SECONDS)
-            .addInterceptor(getHeaderInterceptor())
-            .apply { addInterceptor(bodyInterceptor) }
             .build()
-
-    /**
-     *
-     */
-    private fun getHeaderInterceptor() = Interceptor {
-        val newRequest = it.request().newBuilder()
-            .build()
-        it.proceed(newRequest)
-    }
 
 }
