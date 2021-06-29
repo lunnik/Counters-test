@@ -1,4 +1,4 @@
-package com.example.counters.presntation.decrease_counter
+package com.example.counters.presentation.decrease_counter
 
 import androidx.lifecycle.LiveData
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure

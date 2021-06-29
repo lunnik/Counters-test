@@ -1,4 +1,4 @@
-package com.example.counters.presntation.get_counters
+package com.example.counters.presentation.get_counters
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData

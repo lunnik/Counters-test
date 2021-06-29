@@ -33,6 +33,10 @@ internal interface CountersApiService {
     suspend fun deleteCounter(): Response<Unit>
 
     /** */
+    @POST(URL.ADD_DELETE)
+    suspend fun addCounter(): Response<List<CounterDto>>
+
+    /** */
     private object URL {
 
         /* */
@@ -46,6 +50,9 @@ internal interface CountersApiService {
 
         /* */
         const val GET_DELETE: String = "counter"
+
+        /* */
+        const val ADD_DELETE: String = "counter"
 
     }
 

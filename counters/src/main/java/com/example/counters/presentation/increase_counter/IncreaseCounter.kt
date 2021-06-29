@@ -1,4 +1,4 @@
-package com.example.counters.presntation.increase_counter
+package com.example.counters.presentation.increase_counter
 
 import androidx.lifecycle.LiveData
 import com.example.counters.domain.use_case.increase_counter.IncreaseCounterFailure

@@ -14,11 +14,10 @@ import com.cornershop.counterstest.presentation.common.extension.failure_manage.
 import com.cornershop.counterstest.presentation.common.extension.loader.ProgressDialog.hideProgressDialog
 import com.cornershop.counterstest.presentation.common.extension.loader.ProgressDialog.showProgressDialog
 import com.example.counters.domain.entity.Counter
-import com.example.counters.presntation.get_counters.GetCountersStatus
+import com.example.counters.presentation.get_counters.GetCountersStatus
 import com.example.domain.Failure
 import com.example.domain.presentation.Status
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.standalone.KoinComponent
 
 class HomeFragment : Fragment() {
 

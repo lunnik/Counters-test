@@ -1,4 +1,4 @@
-package com.example.counters.presntation.increase_counter
+package com.example.counters.presentation.increase_counter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData

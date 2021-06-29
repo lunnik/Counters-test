@@ -1,6 +1,8 @@
 package com.example.counters.data
 
 import com.example.counters.domain.CountersRepository
+import com.example.counters.domain.use_case.add_counter.AddCounterFailure
+import com.example.counters.domain.use_case.add_counter.AddCounterResponse
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterResponse
 import com.example.counters.domain.use_case.delete_counter.DeleteCounterFailure
@@ -43,6 +45,12 @@ internal class CountersRepositoryImpl(
         if (isOnline)
             countersDataSource.deleteCounters()
         else Either.Left(DeleteCounterFailure.NetworkConnectionFailure)
+
+    /** */
+    override suspend fun addCounters(): Either<AddCounterFailure, AddCounterResponse> =
+        if (isOnline)
+            countersDataSource.addCounters()
+        else Either.Left(AddCounterFailure.NetworkConnectionFailure)
 
 
 }

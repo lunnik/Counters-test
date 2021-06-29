@@ -1,5 +1,7 @@
 package com.example.counters.data
 
+import com.example.counters.domain.use_case.add_counter.AddCounterFailure
+import com.example.counters.domain.use_case.add_counter.AddCounterResponse
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterResponse
 import com.example.counters.domain.use_case.delete_counter.DeleteCounterFailure
@@ -24,5 +26,8 @@ internal interface CountersDataSource {
 
     /** */
     suspend fun deleteCounters(): Either<DeleteCounterFailure, DeleteCounterResponse>
+
+    /** */
+    suspend fun addCounters(): Either<AddCounterFailure, AddCounterResponse>
 
 }

@@ -1,4 +1,4 @@
-package com.example.counters.presntation.delete_counter
+package com.example.counters.presentation.delete_counter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
