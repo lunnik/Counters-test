@@ -47,9 +47,9 @@ internal class CountersRepositoryImpl(
         else Either.Left(DeleteCounterFailure.NetworkConnectionFailure)
 
     /** */
-    override suspend fun addCounters(): Either<AddCounterFailure, AddCounterResponse> =
+    override suspend fun addCounters(title:String): Either<AddCounterFailure, AddCounterResponse> =
         if (isOnline)
-            countersDataSource.addCounters()
+            countersDataSource.addCounters(title)
         else Either.Left(AddCounterFailure.NetworkConnectionFailure)
 
 

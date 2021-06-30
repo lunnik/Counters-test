@@ -54,6 +54,7 @@
 
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/action_button_add_counters"
             style="@style/AppTheme.Button.Solid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

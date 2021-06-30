@@ -19,4 +19,7 @@
     <dimen name="button_text_size">15dp</dimen>
     <dimen name="button_padding_lateral">18dp</dimen>
     <dimen name="button_padding_vertical">20dp</dimen>
+
+    <!-- FONT SIZE: EditText -->
+    <dimen name="caption_font_size">16sp</dimen>
 </resources>

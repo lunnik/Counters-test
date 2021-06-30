@@ -13,5 +13,5 @@ class AddCounterUseCase(
     override suspend fun run(
         params: AddCounterParams
     ): Either<AddCounterFailure, AddCounterResponse> =
-        countersRepository.getCounters()
+        countersRepository.addCounters(params.title)
 }

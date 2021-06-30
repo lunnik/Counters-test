@@ -7,4 +7,9 @@
     <color name="light_gray">#DCDCDF</color>
 
     <color name="welcome_background">#F9F9F9</color>
+
+    <!-- TEXT INPUT LAYOUT -->
+    <color name="til_error_color">#FC5457</color>
+    <color name="colorTextPlaceHolder">#80FFFFFF</color>
+
 </resources>

@@ -28,7 +28,7 @@ interface CountersRepository {
     suspend fun deleteCounters(): Either<DeleteCounterFailure, DeleteCounterResponse>
 
     /** */
-    suspend fun addCounters(): Either<AddCounterFailure, AddCounterResponse>
+    suspend fun addCounters(title:String): Either<AddCounterFailure, AddCounterResponse>
 
 
 }

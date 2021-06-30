@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.cornershop.counterstest.R
 import com.cornershop.counterstest.databinding.HomeFragmentBinding
 import com.cornershop.counterstest.presentation.common.extension.android.showSnackbar
 import com.cornershop.counterstest.presentation.common.extension.android.view.gone
@@ -22,8 +24,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class HomeFragment : Fragment() {
 
     /* */
-    private val binding: HomeFragmentBinding
-            by lazy { HomeFragmentBinding.inflate(layoutInflater) }
+    private val binding: HomeFragmentBinding by lazy {
+        HomeFragmentBinding.inflate(layoutInflater).apply {
+            lifecycleOwner = this@HomeFragment
+        }
+    }
 
     /* */
     private val homeViewModel: HomeViewModel by viewModel()
@@ -38,7 +43,22 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         execute()
+        setupView()
+    }
 
+    /** */
+    private fun setupView() {
+        setupAction()
+    }
+
+    /** */
+    private fun setupAction() {
+        binding.actionButtonAddCounters.setOnClickListener(::onActionAddCounterClickListener)
+    }
+
+    /** */
+    private fun onActionAddCounterClickListener(v: View) {
+        findNavController().navigate(R.id.action_homeFragment_to_addCounterFragment)
     }
 
     /** */

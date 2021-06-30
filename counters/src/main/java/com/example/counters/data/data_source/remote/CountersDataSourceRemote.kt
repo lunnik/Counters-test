@@ -2,6 +2,7 @@ package com.example.counters.data.data_source.remote
 
 import com.example.data_source.data.exception.message
 import com.example.counters.data.CountersDataSource
+import com.example.counters.data.data_source.remote.model.AddCounterRequest
 import com.example.counters.domain.use_case.add_counter.AddCounterFailure
 import com.example.counters.domain.use_case.add_counter.AddCounterResponse
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
@@ -49,9 +50,21 @@ internal class CountersDataSourceRemote(
         TODO("Not yet implemented")
     }
 
-    override suspend fun addCounters(): Either<AddCounterFailure, AddCounterResponse> {
-        TODO("Not yet implemented")
-    }
-
+    /** */
+    override suspend fun addCounters(title: String): Either<AddCounterFailure, AddCounterResponse> =
+        try {
+            retrofitApiCall {
+                val addCounterRequest = AddCounterRequest(title)
+                countersApiService.addCounter(addCounterRequest)
+            }.let { httpResponse ->
+                Either.Right(AddCounterResponse(httpResponse.map { it.toCounter() }))
+            }
+        } catch (exception: Exception) {
+            val failure: AddCounterFailure = when (exception) {
+                is HttpException -> exception.toAddCounterFailure()
+                else -> AddCounterFailure.UnknownFailure(exception.message())
+            }
+            Either.Left(failure)
+        }
 
 }

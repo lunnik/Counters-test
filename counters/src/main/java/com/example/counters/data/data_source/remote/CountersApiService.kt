@@ -1,5 +1,6 @@
 package com.example.counters.data.data_source.remote
 
+import com.example.counters.data.data_source.remote.model.AddCounterRequest
 import com.example.counters.data.data_source.remote.model.DecreaseCounterRequest
 import com.example.counters.data.data_source.remote.model.IncreaseCounterRequest
 import com.example.counters.data.data_source.remote.model.dto.CounterDto
@@ -34,7 +35,9 @@ internal interface CountersApiService {
 
     /** */
     @POST(URL.ADD_DELETE)
-    suspend fun addCounter(): Response<List<CounterDto>>
+    suspend fun addCounter(
+        @Body request: AddCounterRequest
+    ): Response<List<CounterDto>>
 
     /** */
     private object URL {

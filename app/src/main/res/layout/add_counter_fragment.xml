@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.home.add_counter.AddCounterFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.cornershop.counterstest.presentation.home.add_counter.AddCounterViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mt_toolbar"
+                style="@style/AppTheme.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                app:navigationIcon="@drawable/ic_close">
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/margin_lateral"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_counter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_vertical"
+                app:errorEnabled="true"
+                app:placeholderText="@string/add_counter_text_place_holder_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tiet_counter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/add_counter_text_hint"
+                    android:inputType="textEmailAddress"
+                    android:text="@={ viewModel.counterInput }" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
