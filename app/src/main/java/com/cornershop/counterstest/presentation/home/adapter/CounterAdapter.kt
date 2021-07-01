@@ -4,12 +4,12 @@ import androidx.recyclerview.widget.ListAdapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
-import com.example.cache.domain.entity.Counter
 
 class CountersAdapter(
     private val onActionClickListener: CounterActionListener
-) : ListAdapter<Counter, CounterViewHolder>(CounterDiffCallback()) {
+) : ListAdapter<CounterModifier, CounterViewHolder>(CounterDiffCallback()) {
 
     /** */
     override fun onCreateViewHolder(
@@ -23,24 +23,24 @@ class CountersAdapter(
         holder: CounterViewHolder,
         position: Int
     ) {
-        val news = currentList[position]
-        holder.bind(news, onActionClickListener)
+        val counter = currentList[position]
+        holder.bind(counter, onActionClickListener)
     }
 }
 
 
-class CounterDiffCallback : DiffUtil.ItemCallback<Counter>() {
+class CounterDiffCallback : DiffUtil.ItemCallback<CounterModifier>() {
 
     /** */
     override fun areItemsTheSame(
-        oldItem: Counter,
-        newItem: Counter
+        oldItem: CounterModifier,
+        newItem: CounterModifier
     ): Boolean = oldItem.id == newItem.id
 
     /** */
     override fun areContentsTheSame(
-        oldItem: Counter,
-        newItem: Counter,
+        oldItem: CounterModifier,
+        newItem: CounterModifier,
     ): Boolean = oldItem.equals(newItem)
 
 }

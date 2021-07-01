@@ -5,7 +5,7 @@
 
         <variable
             name="counter"
-            type="com.example.cache.domain.entity.Counter" />
+            type="com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"

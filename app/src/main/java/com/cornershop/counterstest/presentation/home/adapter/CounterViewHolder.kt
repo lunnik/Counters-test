@@ -1,29 +1,54 @@
 package com.cornershop.counterstest.presentation.home.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cornershop.counterstest.databinding.ViewHolderCountersBinding
+import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
-import com.example.cache.domain.entity.Counter
 
 class CounterViewHolder(
     var binding: ViewHolderCountersBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    /* */
-    private val context: Context get() = binding.root.context
 
     /** */
     fun bind(
-        counter: Counter,
+        counterModifier: CounterModifier,
         onActionClickListener: CounterActionListener
     ) {
-        binding.counter = counter
-        binding.root.setOnClickListener {
-
+        binding.counter = counterModifier
+        binding.imageButtonMinus.setOnClickListener {
+            onMinusClickListener(counterModifier, onActionClickListener)
         }
+        binding.imageButtonPlus.setOnClickListener {
+            onPlusClickListener(counterModifier, onActionClickListener)
+        }
+    }
+
+    /** */
+    private fun onPlusClickListener(
+        counterModifier: CounterModifier,
+        onActionClickListener: CounterActionListener?
+    ) {
+        counterModifier.count + 1
+        onActionClickListener?.onPlusClickListener(counterModifier)
+    }
+
+    /** */
+    private fun onMinusClickListener(
+        counterModifier: CounterModifier,
+        onActionClickListener: CounterActionListener?
+    ) {
+        if (counterModifier.count == 0)
+            onDeleteActionListener(onActionClickListener)
+        counterModifier.count - 1
+        onActionClickListener?.onMinusClickListener(counterModifier)
+    }
+
+    /** */
+    private fun onDeleteActionListener(onActionClickListener: CounterActionListener?) {
+        onActionClickListener?.onDeleteActionListener()
     }
 
     /** */

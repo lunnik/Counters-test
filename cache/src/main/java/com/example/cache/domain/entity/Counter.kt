@@ -7,8 +7,9 @@ import androidx.room.PrimaryKey
 /** */
 @Entity(tableName = "Counter")
 data class Counter(
-    @ColumnInfo(name = "count") val count: Int,
     @PrimaryKey
     @ColumnInfo(name = "id") val id: String,
+    @ColumnInfo(name = "count") val count: Int,
     @ColumnInfo(name = "title") val title: String
-)
+){
+}

@@ -18,6 +18,7 @@ import com.cornershop.counterstest.presentation.common.extension.loader.Progress
 import com.cornershop.counterstest.presentation.common.extension.loader.ProgressDialog.showProgressDialog
 import com.cornershop.counterstest.presentation.common.extension.message.dialog.showCommonDialog
 import com.cornershop.counterstest.presentation.home.adapter.CountersAdapter
+import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
 import com.example.cache.domain.entity.Counter
 import com.example.counters.domain.use_case.get_counters.GetCountersFailure
@@ -81,12 +82,16 @@ class HomeFragment : Fragment() {
 
     /** */
     private val counterActionListener = object : CounterActionListener {
-        override fun onMinusClickListener() {
-            TODO("Not yet implemented")
+        override fun onMinusClickListener(counterModifier: CounterModifier) {
+            //TODO("Not yet implemented")
         }
 
-        override fun onPlusClickListener() {
-            TODO("Not yet implemented")
+        override fun onPlusClickListener(counterModifier: CounterModifier) {
+            // TODO("Not yet implemented")
+        }
+
+        override fun onDeleteActionListener() {
+            //TODO("Not yet implemented")
         }
     }
 
@@ -129,8 +134,9 @@ class HomeFragment : Fragment() {
     private fun manageGetCountersDone(counter: List<Counter>) {
         if (counter.isEmpty())
             binding.includeLayoutNoContent.visible()
-        else{
-            countersAdapter.submitList(counter)
+        else {
+            val list = counter.map { CounterModifier.fromCounter(it) }
+            countersAdapter.submitList(list)
             binding.includeLayoutNoContent.gone()
             binding.includeLayoutContent.visible()
         }
