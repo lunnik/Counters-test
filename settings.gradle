@@ -3,4 +3,5 @@ include ':data_source'
 include ':domain'
 include ':network'
 include ':counters'
+include ':cache'
 rootProject.name = "Counters Test"

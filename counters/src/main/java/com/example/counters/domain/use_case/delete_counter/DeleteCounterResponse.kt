@@ -1,6 +1,6 @@
 package com.example.counters.domain.use_case.delete_counter
 
-import com.example.counters.domain.entity.Counter
+import com.example.cache.domain.entity.Counter
 
 /** */
 data class DeleteCounterResponse(

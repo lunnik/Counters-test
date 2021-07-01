@@ -1,9 +1,14 @@
 apply from: "$rootDir/common-android-library.gradle"
 
 dependencies {
+
+    //Room
+    implementation Room.roomKtx
+    implementation Room.roomRuntime
+    kapt(Room.roomCompiler)
+
     /* Modules */
     implementation project(path: Modules.dataSource)
     implementation project(path: Modules.network)
     implementation project(path: Modules.domain)
-    implementation project(path: Modules.cache)
 }

@@ -19,7 +19,7 @@ import com.cornershop.counterstest.presentation.common.extension.loader.Progress
 import com.cornershop.counterstest.presentation.common.extension.message.dialog.showCommonDialog
 import com.cornershop.counterstest.presentation.home.adapter.CountersAdapter
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
-import com.example.counters.domain.entity.Counter
+import com.example.cache.domain.entity.Counter
 import com.example.counters.domain.use_case.get_counters.GetCountersFailure
 import com.example.counters.presentation.get_counters.GetCountersStatus
 import com.example.domain.presentation.Status

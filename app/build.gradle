@@ -110,6 +110,7 @@ dependencies {
     implementation project(path: Modules.domain)
     implementation project(path: Modules.network)
     implementation project(path: Modules.counters)
+    implementation project(path: Modules.cache)
 
     // Testing
     testImplementation Junit.junit

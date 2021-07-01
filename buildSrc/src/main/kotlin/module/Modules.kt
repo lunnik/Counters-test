@@ -13,4 +13,7 @@ object Modules {
     /* */
     const val counters: String = ":counters"
 
+    /* */
+    const val cache: String = ":cache"
+
 }

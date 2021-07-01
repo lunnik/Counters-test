@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.ListAdapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
-import com.example.counters.domain.entity.Counter
+import com.example.cache.domain.entity.Counter
 
 class CountersAdapter(
     private val onActionClickListener: CounterActionListener
@@ -40,7 +40,7 @@ class CounterDiffCallback : DiffUtil.ItemCallback<Counter>() {
     /** */
     override fun areContentsTheSame(
         oldItem: Counter,
-        newItem: Counter
+        newItem: Counter,
     ): Boolean = oldItem.equals(newItem)
 
 }

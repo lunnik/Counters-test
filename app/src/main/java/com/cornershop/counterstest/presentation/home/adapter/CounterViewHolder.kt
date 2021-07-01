@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cornershop.counterstest.databinding.ViewHolderCountersBinding
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
-import com.example.counters.domain.entity.Counter
+import com.example.cache.domain.entity.Counter
 
 class CounterViewHolder(
     var binding: ViewHolderCountersBinding

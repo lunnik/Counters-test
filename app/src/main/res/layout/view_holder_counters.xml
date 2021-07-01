@@ -5,7 +5,7 @@
 
         <variable
             name="counter"
-            type="com.example.counters.domain.entity.Counter" />
+            type="com.example.cache.domain.entity.Counter" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"

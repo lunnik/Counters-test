@@ -1,7 +1,7 @@
 package com.example.counters.data.data_source.remote.model.dto
 
 
-import com.example.counters.domain.entity.Counter
+import com.example.cache.domain.entity.Counter
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
