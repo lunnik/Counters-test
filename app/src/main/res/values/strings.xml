@@ -68,4 +68,8 @@
 
     <!-- Counter FORMAT ERROR -->
     <string name="counter_format_error_min_length">Obligatory field</string>
+    <string name="counter_format_error_mccin_length">4
+
+
+I am trying Material theme and changing the background and text color of Menu and items. Using the below style it works fine on the Toolbar, but the menu pop up while pressing device menu button shows no change in text color though the background got changed. Please help to change the text color as mentioned.</string>
 </resources>

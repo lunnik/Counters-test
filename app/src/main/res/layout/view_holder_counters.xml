@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="counter"
+            type="com.example.counters.domain.entity.Counter" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_vertical_view_holder"
+        android:layout_weight="10"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_name_counter"
+            style="@style/AppTheme.TextView.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:maxLines="3"
+            android:textSize="17sp"
+            tools:text="@string/add_counter_text_place_holder_hint" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="3"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/image_button_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:padding="@dimen/padding_help_touch"
+                android:src="@drawable/ic_minus"
+                android:tint="@color/orange" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_counter"
+                style="@style/AppTheme.TextView.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_view_holder_widget"
+                tools:text="1" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/image_button_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:padding="@dimen/padding_help_touch"
+                android:src="@drawable/ic_plus"
+                android:tint="@color/orange" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

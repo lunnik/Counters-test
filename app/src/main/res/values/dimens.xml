@@ -22,4 +22,11 @@
 
     <!-- FONT SIZE: EditText -->
     <dimen name="caption_font_size">16sp</dimen>
+
+    <!--padding-->
+    <dimen name="padding_help_touch">8dp</dimen>
+
+    <!--View holder-->
+    <dimen name="margin_vertical_view_holder">20dp</dimen>
+    <dimen name="space_view_holder_widget">20dp</dimen>
 </resources>
