@@ -25,6 +25,7 @@ class WelcomeActivity : AppCompatActivity() {
     /** */
     private fun setupActions() {
         binding.includeLayoutWelcomeContent.buttonStart.setOnClickListener(::onStarAction)
+        binding.includeLayoutWelcomeContent.buttonStart.performClick()
     }
 
     /** */

@@ -38,7 +38,7 @@
     <string name="connection_error_description">The Internet connection appears to be offline.</string>
     <string name="generic_error_description">There has been a problem.</string>
     <string name="retry">Retry</string>
-    <string name="save">Save</string>
+    <string name="save"><font color='#FF9500'><b>Save</b></font></string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="dismiss">Dismiss</string>
@@ -49,21 +49,23 @@
     <string name="create_counter">Create counter</string>
     <string name="counter_name_label">Name</string>
     <string name="counter_name_hint">Cups of coffee</string>
-    <string name="create_counter_disclaimer">Give it a name. Creative block? See examples.</string>
+    <string name="create_counter_disclaimer">Give it a name. Creative block? See <u>examples</u>.</string>
     <string name="delete_x_question">Delete "%s"?</string>
     <string name="n_per_counter_name">%d × %s</string>
     <string name="add_counter_label_hint">Cups of coffee</string>
     <string name="add_counter_text_place_holder_hint">Cups of coffee</string>
     <string name="add_counter_text_hint">Name</string>
+    <string name="add_counter_text_counter_created_done">Counter created</string>
 
     <!--common-->
-    <string name="network_connection_failure_message">No cuentas con conexión a internet</string>
-    <string name="failure_message">Ocurrió un error: %s</string>
+    <string name="failure_message">Ups an error occurred: %s</string>
 
     <!-- FAILURE: Common -->
-    <string name="failure_network_connection">No cuentas con conexión a internet</string>
-    <string name="failure_http_code">Código: %d - Mensaje: %s</string>
-    <string name="failure_unknown">Ocurrió un error: %s</string>
+    <string name="failure_http_code">Code: %d - message: %s</string>
+    <string name="failure_unknown">Ups an error occurred: %s</string>
 
     <!--home-->
+
+    <!-- Counter FORMAT ERROR -->
+    <string name="counter_format_error_min_length">Obligatory field</string>
 </resources>

@@ -9,15 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.cornershop.counterstest.R
 import com.cornershop.counterstest.databinding.HomeFragmentBinding
-import com.cornershop.counterstest.presentation.common.extension.android.showSnackbar
+import com.cornershop.counterstest.presentation.common.extension.android.showSnackBar
 import com.cornershop.counterstest.presentation.common.extension.android.view.gone
 import com.cornershop.counterstest.presentation.common.extension.android.view.visible
 import com.cornershop.counterstest.presentation.common.extension.failure_manage.getCommonFailureMessage
 import com.cornershop.counterstest.presentation.common.extension.loader.ProgressDialog.hideProgressDialog
 import com.cornershop.counterstest.presentation.common.extension.loader.ProgressDialog.showProgressDialog
+import com.cornershop.counterstest.presentation.common.extension.message.dialog.showCommonDialog
 import com.example.counters.domain.entity.Counter
+import com.example.counters.domain.use_case.get_counters.GetCountersFailure
 import com.example.counters.presentation.get_counters.GetCountersStatus
-import com.example.domain.Failure
 import com.example.domain.presentation.Status
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -78,9 +79,21 @@ class HomeFragment : Fragment() {
     }
 
     /** */
-    private fun manageGetCountersFailure(failure: Failure) {
-        val message = getCommonFailureMessage(failure)
-        showSnackbar(message)
+    private fun manageGetCountersFailure(failure: GetCountersFailure) {
+        when (failure) {
+            GetCountersFailure.NetworkConnectionFailure -> {
+                showCommonDialog(positiveAction = ::positiveActionDialog)
+            }
+            else -> {
+                val message = getCommonFailureMessage(failure)
+                showSnackBar(message)
+            }
+        }
+
+    }
+
+    private fun positiveActionDialog() {
+        /*NOTHING*/
     }
 
     /** */

@@ -10,10 +10,6 @@ fun <T> Fragment.navigateTo(javaClass: Class<T>, clearTop: Boolean = false) =
     requireContext().navigateTo(javaClass, clearTop)
 
 /** */
-fun Fragment.getNetworkConnectionFailureMessage() =
-    getString(R.string.network_connection_failure_message)
-
-/** */
 fun Fragment.getUnknownFailureMessage(failureMessage: String) =
     getString(R.string.failure_message, failureMessage)
 

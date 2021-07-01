@@ -3,6 +3,7 @@ package com.cornershop.counterstest.presentation.common.extension.android
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -32,19 +33,19 @@ fun <T> Context.showToast(value: T, length: Int = Toast.LENGTH_SHORT) {
 }
 
 /** */
-fun Fragment.showSnackbar(@StringRes messageRes: Int, duration: Int = Snackbar.LENGTH_LONG) {
+fun Fragment.showSnackBar(@StringRes messageRes: Int, duration: Int = Snackbar.LENGTH_LONG) {
     val stringMessage: String = getString(messageRes)
-    showSnackbar(stringMessage)
+    showSnackBar(stringMessage)
 }
 
 /** */
-fun Fragment.showSnackbar(message: String, duration: Int = Snackbar.LENGTH_LONG) {
-    val snackbar = Snackbar.make(view ?: return, message, duration)
-    val backgroundColor = ContextCompat.getColor(requireContext(), R.color.black)
-    snackbar.view.setBackgroundColor(backgroundColor)
-    val textColor = ContextCompat.getColor(requireContext(), android.R.color.white)
-    snackbar.setTextColor(textColor)
-    snackbar.show()
+fun Fragment.showSnackBar(message: String, duration: Int = Snackbar.LENGTH_LONG) {
+    val snackBar = Snackbar.make(view ?: return, message, duration)
+    val backgroundColor = ContextCompat.getColor(requireContext(), R.color.orange)
+    snackBar.view.setBackgroundColor(backgroundColor)
+    val textColor = ContextCompat.getColor(requireContext(), android.R.color.black)
+    snackBar.setTextColor(textColor)
+    snackBar.show()
 }
 
 
@@ -58,3 +59,7 @@ fun <T> Context.navigateTo(javaClass: Class<T>, clearTop: Boolean = false) {
         startActivity(this)
     }
 }
+
+/** */
+fun Context.getColorFromResource(@ColorRes colorResource: Int): Int =
+    ContextCompat.getColor(this, colorResource)

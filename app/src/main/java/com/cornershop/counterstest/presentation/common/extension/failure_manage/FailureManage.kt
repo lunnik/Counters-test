@@ -13,7 +13,7 @@ import com.example.domain.Failure
  *
  */
 fun Context.getNetworkConnectionFailureMessage() =
-    getString(R.string.failure_network_connection)
+    getString(R.string.connection_error_description)
 
 /**
  *
@@ -24,32 +24,10 @@ fun Context.getServerFailure(httpFailure: HttpFailure) =
 /**
  *
  */
-fun Context.getHttpCodeFailureMessage(code: Int, message: String) =
-    getString(R.string.failure_http_code, code, message)
-
-/**
- *
- */
 fun Context.getUnknownFailureMessage(message: String) =
     getString(R.string.failure_unknown, message)
 
-/**
- *
- */
-fun Fragment.getNetworkConnectionFailureMessage() =
-    requireContext().getNetworkConnectionFailureMessage()
 
-/**
- *
- */
-fun Fragment.getHttpCodeFailureMessage(code: Int, message: String) =
-    requireContext().getHttpCodeFailureMessage(code, message)
-
-/**
- *
- */
-fun Fragment.getUnknownFailureMessage(message: String) =
-    requireContext().getUnknownFailureMessage(message)
 
 /**
  *

@@ -13,6 +13,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorSecondary</item>
         <item name="textInputStyle">@style/Theme.TextInputLayout</item>
+        <item name="android:progressBarStyle">@style/AppTheme.ProgressBar</item>
     </style>
 
     <style name="Theme.CountersWelcome" parent="Theme.CountersNormal">

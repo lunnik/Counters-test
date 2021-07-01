@@ -37,5 +37,21 @@
         <item name="android:textSize">17sp</item>
     </style>
 
+    <!-- PROGRESS BAR  -->
+    <style name="AppTheme.ProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="android:progressBackgroundTint">@color/orange</item>
+        <item name="android:indeterminateTint">@color/orange</item>
+        <item name="android:progressTint">@color/orange</item>
+    </style>
+
+    <style name="Theme.Dialog" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="buttonBarNegativeButtonStyle">@style/Theme.Dialog.Button</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Theme.Dialog.Button</item>
+    </style>
+
+    <style name="Theme.Dialog.Button" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>
