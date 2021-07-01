@@ -8,6 +8,6 @@ import com.example.domain.Either
 internal interface CounterDataSource {
 
     /** */
-    suspend fun addCounterActivity(counter: Counter):
+    suspend fun addCounterActivity(counters: List<Counter>):
             Either<AddCounterFailure, AddCounterResponse>
 }

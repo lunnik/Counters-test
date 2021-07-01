@@ -11,10 +11,10 @@ interface CounterDao {
 
     /** */
     @Query("SELECT * FROM Counter")
-    suspend fun getAthleteActivity(): List<Counter>
+    suspend fun getCounters(): List<Counter>
 
     /** */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addCounterActivity(athleteActivity: Counter): Long
+    suspend fun addCounters(counters: List<Counter>)
 
 }

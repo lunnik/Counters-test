@@ -15,9 +15,6 @@ class AddCounterUseCase(
         params: AddCounterParams
     ): Either<AddCounterFailure, AddCounterResponse> =
         counterRepository.addCounterActivity(
-            Counter(
-                count = params.count,
-                id = params.id,
-                title = params.title)
+            params.counters
         )
 }

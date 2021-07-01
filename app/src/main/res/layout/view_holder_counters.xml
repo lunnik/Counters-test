@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_vertical_view_holder"
-        android:layout_weight="10"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -24,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:maxLines="3"
+            android:text="@{counter.title}"
             android:textSize="17sp"
             tools:text="@string/add_counter_text_place_holder_hint" />
 
@@ -50,6 +50,7 @@
                 style="@style/AppTheme.TextView.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{String.valueOf(counter.count)}"
                 android:layout_marginHorizontal="@dimen/space_view_holder_widget"
                 tools:text="1" />
 

@@ -15,9 +15,9 @@ class CounterDataSourceLocal(
 
 
     /** */
-    override suspend fun addCounterActivity(counter: Counter): Either<AddCounterFailure, AddCounterResponse> =
+    override suspend fun addCounterActivity(counters: List<Counter>): Either<AddCounterFailure, AddCounterResponse> =
         try {
-            counterDao.addCounterActivity(counter)
+            counterDao.addCounters(counters)
             Either.Right(AddCounterResponse)
         } catch (exception: Exception) {
             val failure = AddCounterFailure.UnknownFailure(exception.message())

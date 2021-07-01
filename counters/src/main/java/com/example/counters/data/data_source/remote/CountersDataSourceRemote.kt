@@ -1,5 +1,6 @@
 package com.example.counters.data.data_source.remote
 
+import com.example.cache.data.local.dao.CounterDao
 import com.example.data_source.data.exception.message
 import com.example.counters.data.CountersDataSource
 import com.example.counters.data.data_source.remote.model.AddCounterRequest
@@ -19,7 +20,8 @@ import retrofit2.HttpException
 
 /** */
 internal class CountersDataSourceRemote(
-    private val countersApiService: CountersApiService
+    private val countersApiService: CountersApiService,
+    private val counterDao: CounterDao,
 ) : CountersDataSource {
 
     /** */
@@ -28,7 +30,9 @@ internal class CountersDataSourceRemote(
         retrofitApiCall {
             countersApiService.getCounters()
         }.let { httpResponse ->
-            Either.Right(GetCountersResponse(httpResponse.map { it.toCounter() }))
+            val counters = httpResponse.map { it.toCounter() }
+            counterDao.addCounters(counters)
+            Either.Right(GetCountersResponse(counters))
         }
     } catch (exception: Exception) {
         val failure: GetCountersFailure = when (exception) {

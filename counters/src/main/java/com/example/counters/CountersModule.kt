@@ -49,7 +49,7 @@ val countersModule = module {
 
     /** DATA SOURCE **/
     single<CountersDataSource> {
-        CountersDataSourceRemote(countersApiService = get())
+        CountersDataSourceRemote(countersApiService = get(), counterDao = get())
     }
 
     /** API SERVICE **/

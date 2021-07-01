@@ -8,7 +8,7 @@ import com.example.domain.Either
 interface CounterRepository {
 
     /** */
-    suspend fun addCounterActivity(counter: Counter):
+    suspend fun addCounterActivity(counters: List<Counter>):
             Either<AddCounterFailure, AddCounterResponse>
 
 }

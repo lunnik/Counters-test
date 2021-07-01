@@ -11,7 +11,7 @@ internal class CounterDataSourceImpl(
 ) : CounterRepository {
 
 
-    override suspend fun addCounterActivity(counter: Counter):
+    override suspend fun addCounterActivity(counters: List<Counter>):
             Either<AddCounterFailure, AddCounterResponse> =
-        athleteActivityDataSource.addCounterActivity(counter)
+        athleteActivityDataSource.addCounterActivity(counters)
 }

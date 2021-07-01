@@ -5,6 +5,7 @@ import com.example.data_source.data.httpClientModule
 import com.example.network.networkModule
 import com.cornershop.counterstest.di.data_source.shared_module.serverUrlProvider
 import com.cornershop.counterstest.di.presentation.homeModule
+import com.example.cache.cacheModule
 import com.example.counters.countersModule
 import org.koin.android.ext.android.startKoin
 import org.koin.dsl.module.Module
@@ -20,15 +21,14 @@ fun TestApp.initKoin() {
     startKoin(applicationContext, modules)
 }
 
-/**
- *
- */
+/** */
 private fun getSharedModules(): List<Module> = listOf(
     /** NETWORK **/
     networkModule,
     /** DATA SOURCE **/
     httpClientModule,
     serverUrlProvider,
+    cacheModule
 )
 
 /** */
@@ -37,9 +37,7 @@ private fun getFeatureModules(): List<Module> = listOf(
 
 )
 
-/**
- *
- */
+/** */
 private fun getPresentationModules(): List<Module> = listOf(
     homeModule
 )

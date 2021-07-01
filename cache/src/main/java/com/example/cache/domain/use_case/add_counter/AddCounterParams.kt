@@ -1,9 +1,9 @@
 package com.example.cache.domain.use_case.add_counter
 
+import com.example.cache.domain.entity.Counter
+
 
 /** */
 data class AddCounterParams(
-    val count: Int,
-    val id: String,
-    val title: String
+    val counters: List<Counter>
 )
