@@ -13,5 +13,5 @@ class DeleteCounterUseCase(
     override suspend fun run(
         params: DeleteCounterParams
     ): Either<DeleteCounterFailure, DeleteCounterResponse> =
-        countersRepository.deleteCounters()
+        countersRepository.deleteCounters(params.id)
 }

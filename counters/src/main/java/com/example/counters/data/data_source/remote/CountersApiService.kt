@@ -21,13 +21,13 @@ internal interface CountersApiService {
     @POST(URL.GET_INC)
     suspend fun increaseCounter(
         @Body request: IncreaseCounterRequest
-    ): Response<Unit>
+    ): Response<List<CounterDto>>
 
     /** */
     @POST(URL.GET_DEC)
     suspend fun decreaseCounter(
         @Body request: DecreaseCounterRequest
-    ): Response<Unit>
+    ): Response<List<CounterDto>>
 
     /** */
     @DELETE(URL.GET_DELETE)

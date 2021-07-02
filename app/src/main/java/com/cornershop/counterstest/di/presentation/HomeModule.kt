@@ -12,7 +12,11 @@ val homeModule: Module = module {
 
     /* */
     viewModel {
-        HomeViewModel(getCounters = get())
+        HomeViewModel(
+            getCounters = get(),
+            increaseCounter = get(),
+            decreaseCounter = get()
+        )
     }
 
     /* */

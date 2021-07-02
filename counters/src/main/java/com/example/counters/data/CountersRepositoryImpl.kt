@@ -29,21 +29,21 @@ internal class CountersRepositoryImpl(
         else Either.Left(GetCountersFailure.NetworkConnectionFailure)
 
     /** */
-    override suspend fun increaseCounters(): Either<IncreaseCounterFailure, IncreaseCounterResponse> =
+    override suspend fun increaseCounters(id:String): Either<IncreaseCounterFailure, IncreaseCounterResponse> =
         if (isOnline)
-            countersDataSource.increaseCounters()
+            countersDataSource.increaseCounters(id)
         else Either.Left(IncreaseCounterFailure.NetworkConnectionFailure)
 
     /** */
-    override suspend fun decreaseCounters(): Either<DecreaseCounterFailure, DecreaseCounterResponse> =
+    override suspend fun decreaseCounters(id:String): Either<DecreaseCounterFailure, DecreaseCounterResponse> =
         if (isOnline)
-            countersDataSource.decreaseCounters()
+            countersDataSource.decreaseCounters(id)
         else Either.Left(DecreaseCounterFailure.NetworkConnectionFailure)
 
     /** */
-    override suspend fun deleteCounters(): Either<DeleteCounterFailure, DeleteCounterResponse> =
+    override suspend fun deleteCounters(id:String): Either<DeleteCounterFailure, DeleteCounterResponse> =
         if (isOnline)
-            countersDataSource.deleteCounters()
+            countersDataSource.deleteCounters(id)
         else Either.Left(DeleteCounterFailure.NetworkConnectionFailure)
 
     /** */

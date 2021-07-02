@@ -21,8 +21,12 @@ import com.cornershop.counterstest.presentation.home.adapter.CountersAdapter
 import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
 import com.example.cache.domain.entity.Counter
+import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
 import com.example.counters.domain.use_case.get_counters.GetCountersFailure
+import com.example.counters.domain.use_case.increase_counter.IncreaseCounterFailure
+import com.example.counters.presentation.decrease_counter.DecreaseCountersStatus
 import com.example.counters.presentation.get_counters.GetCountersStatus
+import com.example.counters.presentation.increase_counter.IncreaseCountersStatus
 import com.example.domain.presentation.Status
 import kotlinx.android.synthetic.main.layout_counter_content.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -82,19 +86,86 @@ class HomeFragment : Fragment() {
 
     /** */
     private val counterActionListener = object : CounterActionListener {
-        override fun onMinusClickListener(counterModifier: CounterModifier) {
-            //TODO("Not yet implemented")
+        /** */
+        override fun onDecreaseCounterClickListener(counterModifier: CounterModifier) {
+            executeDecreaseCounter(counterModifier.id)
         }
 
-        override fun onPlusClickListener(counterModifier: CounterModifier) {
-            // TODO("Not yet implemented")
+        /** */
+        override fun onIncreaseCounterClickListener(counterModifier: CounterModifier) {
+            executeIncreaseCounter(counterModifier.id)
         }
 
+        /** */
         override fun onDeleteActionListener() {
             //TODO("Not yet implemented")
         }
     }
 
+    //INCREMENT COUNTER
+    /** */
+    private fun executeIncreaseCounter(id: String) {
+        homeViewModel.increaseCountersAsLiveData(id)
+            .observe(viewLifecycleOwner, createIncreaseCounterObserver())
+    }
+
+    /** */
+    private fun createIncreaseCounterObserver() = Observer<IncreaseCountersStatus> {
+        hideProgressDialog()
+        when (it) {
+            is Status.Loading -> showProgressDialog()
+            is Status.Failed -> manageIncreaseCounterFailure(it.failure)
+            is Status.Done -> manageGetCountersDone(it.value.counters)
+        }
+    }
+
+    /** */
+    private fun manageIncreaseCounterFailure(failure: IncreaseCounterFailure) {
+        when (failure) {
+            IncreaseCounterFailure.NetworkConnectionFailure -> {
+                showCommonDialog(positiveAction = ::positiveActionDialog)
+            }
+            else -> {
+                val message = getCommonFailureMessage(failure)
+                showSnackBar(message)
+            }
+        }
+
+    }
+
+    //DECREMENT COUNTER
+
+    /** */
+    private fun executeDecreaseCounter(id: String) {
+        homeViewModel.decreaseCountersAsLiveData(id)
+            .observe(viewLifecycleOwner, createDecreaseCounterObserver())
+    }
+
+    /** */
+    private fun createDecreaseCounterObserver() = Observer<DecreaseCountersStatus> {
+        hideProgressDialog()
+        when (it) {
+            is Status.Loading -> showProgressDialog()
+            is Status.Failed -> manageDecreaseCounterFailure(it.failure)
+            is Status.Done -> manageGetCountersDone(it.value.counters)
+        }
+    }
+
+    /** */
+    private fun manageDecreaseCounterFailure(failure: DecreaseCounterFailure) {
+        when (failure) {
+            DecreaseCounterFailure.NetworkConnectionFailure -> {
+                showCommonDialog(positiveAction = ::positiveActionDialog)
+            }
+            else -> {
+                val message = getCommonFailureMessage(failure)
+                showSnackBar(message)
+            }
+        }
+
+    }
+
+    //LOAD  COUNTERS
 
     /** */
     private fun execute() {
@@ -126,10 +197,6 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun positiveActionDialog() {
-        /*NOTHING*/
-    }
-
     /** */
     private fun manageGetCountersDone(counter: List<Counter>) {
         if (counter.isEmpty())
@@ -142,4 +209,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /** */
+    private fun positiveActionDialog() {
+        /*NOTHING*/
+    }
 }

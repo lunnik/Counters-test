@@ -32,7 +32,7 @@ class CounterViewHolder(
         onActionClickListener: CounterActionListener?
     ) {
         counterModifier.count + 1
-        onActionClickListener?.onPlusClickListener(counterModifier)
+        onActionClickListener?.onIncreaseCounterClickListener(counterModifier)
     }
 
     /** */
@@ -43,7 +43,7 @@ class CounterViewHolder(
         if (counterModifier.count == 0)
             onDeleteActionListener(onActionClickListener)
         counterModifier.count - 1
-        onActionClickListener?.onMinusClickListener(counterModifier)
+        onActionClickListener?.onDecreaseCounterClickListener(counterModifier)
     }
 
     /** */

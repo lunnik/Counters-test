@@ -13,5 +13,5 @@ class DecreaseCounterUseCase(
     override suspend fun run(
         params: DecreaseCounterParams
     ): Either<DecreaseCounterFailure, DecreaseCounterResponse> =
-        countersRepository.decreaseCounters()
+        countersRepository.decreaseCounters(params.id)
 }

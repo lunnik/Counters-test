@@ -19,13 +19,13 @@ internal interface CountersDataSource {
     suspend fun getCounters(): Either<GetCountersFailure, GetCountersResponse>
 
     /** */
-    suspend fun increaseCounters(): Either<IncreaseCounterFailure, IncreaseCounterResponse>
+    suspend fun increaseCounters(id:String): Either<IncreaseCounterFailure, IncreaseCounterResponse>
 
     /** */
-    suspend fun decreaseCounters(): Either<DecreaseCounterFailure, DecreaseCounterResponse>
+    suspend fun decreaseCounters(id:String): Either<DecreaseCounterFailure, DecreaseCounterResponse>
 
     /** */
-    suspend fun deleteCounters(): Either<DeleteCounterFailure, DeleteCounterResponse>
+    suspend fun deleteCounters(id:String): Either<DeleteCounterFailure, DeleteCounterResponse>
 
     /** */
     suspend fun addCounters(title:String): Either<AddCounterFailure, AddCounterResponse>
