@@ -78,6 +78,7 @@ dependencies {
     // Android X
     implementation AndroidX.core
     implementation AndroidX.appCompat
+    implementation AndroidX.swipeRefreshLayout
     // Coroutines
     api Coroutines.core
     api Coroutines.android

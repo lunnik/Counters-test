@@ -5,6 +5,7 @@ import com.example.data_source.data.exception.message
 import com.example.counters.data.CountersDataSource
 import com.example.counters.data.data_source.remote.model.AddCounterRequest
 import com.example.counters.data.data_source.remote.model.DecreaseCounterRequest
+import com.example.counters.data.data_source.remote.model.DeleteCounterRequest
 import com.example.counters.data.data_source.remote.model.IncreaseCounterRequest
 import com.example.counters.domain.use_case.add_counter.AddCounterFailure
 import com.example.counters.domain.use_case.add_counter.AddCounterResponse
@@ -44,40 +45,60 @@ internal class CountersDataSourceRemote(
         Either.Left(failure)
     }
 
-    override suspend fun increaseCounters(id:String): Either<IncreaseCounterFailure, IncreaseCounterResponse> = try {
-        retrofitApiCall {
-            val request= IncreaseCounterRequest(id)
-            countersApiService.increaseCounter(request)
-        }.let { httpResponse ->
-            val counters = httpResponse.map { it.toCounter() }
-            Either.Right(IncreaseCounterResponse(counters))
+    /** */
+    override suspend fun increaseCounters(id: String): Either<IncreaseCounterFailure, IncreaseCounterResponse> =
+        try {
+            retrofitApiCall {
+                val request = IncreaseCounterRequest(id)
+                countersApiService.increaseCounter(request)
+            }.let { httpResponse ->
+                val counters = httpResponse.map { it.toCounter() }
+                Either.Right(IncreaseCounterResponse(counters))
+            }
+        } catch (exception: Exception) {
+            val failure: IncreaseCounterFailure = when (exception) {
+                is HttpException -> exception.toIncreaseCounterFailure()
+                else -> IncreaseCounterFailure.UnknownFailure(exception.message())
+            }
+            Either.Left(failure)
         }
-    } catch (exception: Exception) {
-        val failure: IncreaseCounterFailure = when (exception) {
-            is HttpException -> exception.toIncreaseCounterFailure()
-            else -> IncreaseCounterFailure.UnknownFailure(exception.message())
-        }
-        Either.Left(failure)
-    }
 
-    override suspend fun decreaseCounters(id:String): Either<DecreaseCounterFailure, DecreaseCounterResponse> = try {
-        retrofitApiCall {
-            val request= DecreaseCounterRequest(id)
-            countersApiService.decreaseCounter(request)
-        }.let { httpResponse ->
-            val counters = httpResponse.map { it.toCounter() }
-            Either.Right(DecreaseCounterResponse(counters))
+    /** */
+    override suspend fun decreaseCounters(id: String): Either<DecreaseCounterFailure, DecreaseCounterResponse> =
+        try {
+            retrofitApiCall {
+                val request = DecreaseCounterRequest(id)
+                countersApiService.decreaseCounter(request)
+            }.let { httpResponse ->
+                val counters = httpResponse.map { it.toCounter() }
+                Either.Right(DecreaseCounterResponse(counters))
+            }
+        } catch (exception: Exception) {
+            val failure: DecreaseCounterFailure = when (exception) {
+                is HttpException -> exception.toDecreaseCounterFailure()
+                else -> DecreaseCounterFailure.UnknownFailure(exception.message())
+            }
+            Either.Left(failure)
         }
-    } catch (exception: Exception) {
-        val failure: DecreaseCounterFailure = when (exception) {
-            is HttpException -> exception.toDecreaseCounterFailure()
-            else -> DecreaseCounterFailure.UnknownFailure(exception.message())
+
+    /** */
+    override suspend fun deleteCounters(id: String): Either<DeleteCounterFailure, DeleteCounterResponse> =
+        try {
+            retrofitApiCall {
+                val request = DeleteCounterRequest(id)
+                countersApiService.deleteCounter(request)
+            }.let { httpResponse ->
+                val counters = httpResponse.map { it.toCounter() }
+                Either.Right(DeleteCounterResponse(counters))
+            }
+        } catch (exception: Exception) {
+            val failure: DeleteCounterFailure = when (exception) {
+                is HttpException -> exception.toDeleteCounterFailure()
+                else -> DeleteCounterFailure.UnknownFailure(exception.message())
+            }
+            Either.Left(failure)
         }
-        Either.Left(failure)
-    }
-    override suspend fun deleteCounters(id:String): Either<DeleteCounterFailure, DeleteCounterResponse> {
-        TODO("Not yet implemented")
-    }
+
 
     /** */
     override suspend fun addCounters(title: String): Either<AddCounterFailure, AddCounterResponse> =

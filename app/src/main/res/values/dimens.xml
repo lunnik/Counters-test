@@ -10,6 +10,7 @@
     <dimen name="margin_vertical">30dp</dimen>
     <dimen name="half_margin_vertical">15dp</dimen>
     <!--margin vertical-->
+    <dimen name="half_lateral">8dp</dimen>
     <dimen name="margin_lateral">16dp</dimen>
     <dimen name="double_lateral">16dp</dimen>
     <dimen name="triple_margin_lateral">48dp</dimen>

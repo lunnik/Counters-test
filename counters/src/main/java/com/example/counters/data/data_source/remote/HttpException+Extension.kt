@@ -2,6 +2,7 @@ package com.example.counters.data.data_source.remote
 
 import com.example.counters.domain.use_case.add_counter.AddCounterFailure
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
+import com.example.counters.domain.use_case.delete_counter.DeleteCounterFailure
 import com.example.counters.domain.use_case.get_counters.GetCountersFailure
 import com.example.counters.domain.use_case.increase_counter.IncreaseCounterFailure
 import com.example.data_source.data.remote.model.HttpErrorCode
@@ -37,4 +38,11 @@ internal fun HttpException.toDecreaseCounterFailure(): DecreaseCounterFailure =
     when (HttpErrorCode.fromCode(code())) {
         HttpErrorCode.FORBIDDEN -> DecreaseCounterFailure.NotEnoughPrivilegesFailure
         else -> DecreaseCounterFailure.ServerFailure(code(), errorMessage())
+    }
+
+/** */
+internal fun HttpException.toDeleteCounterFailure(): DeleteCounterFailure =
+    when (HttpErrorCode.fromCode(code())) {
+        HttpErrorCode.FORBIDDEN -> DeleteCounterFailure.NotEnoughPrivilegesFailure
+        else -> DeleteCounterFailure.ServerFailure(code(), errorMessage())
     }

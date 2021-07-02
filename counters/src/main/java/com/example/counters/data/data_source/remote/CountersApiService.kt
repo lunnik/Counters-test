@@ -2,6 +2,7 @@ package com.example.counters.data.data_source.remote
 
 import com.example.counters.data.data_source.remote.model.AddCounterRequest
 import com.example.counters.data.data_source.remote.model.DecreaseCounterRequest
+import com.example.counters.data.data_source.remote.model.DeleteCounterRequest
 import com.example.counters.data.data_source.remote.model.IncreaseCounterRequest
 import com.example.counters.data.data_source.remote.model.dto.CounterDto
 import retrofit2.Response
@@ -31,7 +32,9 @@ internal interface CountersApiService {
 
     /** */
     @DELETE(URL.GET_DELETE)
-    suspend fun deleteCounter(): Response<Unit>
+    suspend fun deleteCounter(
+        @Body request: DeleteCounterRequest
+    ): Response<List<CounterDto>>
 
     /** */
     @POST(URL.ADD_DELETE)

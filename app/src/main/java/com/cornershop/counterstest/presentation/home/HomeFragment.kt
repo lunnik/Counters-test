@@ -61,8 +61,21 @@ class HomeFragment : Fragment() {
 
     /** */
     private fun setupView() {
+        setupPullToRefreshCounters()
+        setupToolbar()
         setupAction()
         initRecyclerView()
+    }
+    /** */
+    private fun setupPullToRefreshCounters() {
+        binding.swipeRefreshCounters.setOnRefreshListener(::execute)
+    }
+
+    /** */
+    private fun setupToolbar() {
+        binding.appBar.apply {
+            outlineProvider = null
+        }
     }
 
     /** */
@@ -86,6 +99,11 @@ class HomeFragment : Fragment() {
 
     /** */
     private val counterActionListener = object : CounterActionListener {
+
+        override fun onCounterClickListener(counterModifier: CounterModifier) {
+            //TODO("Not yet implemented")
+        }
+
         /** */
         override fun onDecreaseCounterClickListener(counterModifier: CounterModifier) {
             executeDecreaseCounter(counterModifier.id)
@@ -97,7 +115,7 @@ class HomeFragment : Fragment() {
         }
 
         /** */
-        override fun onDeleteActionListener() {
+        override fun onDeleteActionListener(counterModifier: CounterModifier) {
             //TODO("Not yet implemented")
         }
     }
@@ -175,12 +193,18 @@ class HomeFragment : Fragment() {
 
     /** */
     private fun createGetCountersStatusObserver() = Observer<GetCountersStatus> {
-        hideProgressDialog()
+        hideProgress()
         when (it) {
             is Status.Loading -> showProgressDialog()
             is Status.Failed -> manageGetCountersFailure(it.failure)
             is Status.Done -> manageGetCountersDone(it.value.counters)
         }
+    }
+
+    /** */
+    private fun hideProgress() {
+        binding.swipeRefreshCounters.isRefreshing = false
+        hideProgressDialog()
     }
 
     /** */
@@ -202,10 +226,19 @@ class HomeFragment : Fragment() {
         if (counter.isEmpty())
             binding.includeLayoutNoContent.visible()
         else {
-            val list = counter.map { CounterModifier.fromCounter(it) }
-            countersAdapter.submitList(list)
+            val listCounter = counter.map { CounterModifier.fromCounter(it) }
+            countersAdapter.submitList(listCounter)
             binding.includeLayoutNoContent.gone()
             binding.includeLayoutContent.visible()
+            val totalItems = listCounter.size
+            var totalTime = 0
+            listCounter.forEach {
+                totalTime += it.count
+            }
+            binding.includeLayoutContent.text_view_items.text =
+                getString(R.string.n_items, totalItems)
+            binding.includeLayoutContent.text_view_items_time.text =
+                getString(R.string.n_times, totalTime)
         }
     }
 
