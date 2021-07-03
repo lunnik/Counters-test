@@ -42,7 +42,7 @@ val countersModule = module {
     factory { AddCounterUseCase(countersRepository = get()) }
 
     /** REPOSITORY **/
-    single<CountersRepository> {
+    factory <CountersRepository> {
         CountersRepositoryImpl(
             countersDataSourceRemote = get(),
             counterDataSourceLocal = get(),

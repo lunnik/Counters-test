@@ -2,6 +2,7 @@ package com.cornershop.counterstest.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,11 +30,14 @@ import com.example.counters.presentation.delete_counter.DeleteCountersStatus
 import com.example.counters.presentation.get_counters.GetCountersStatus
 import com.example.counters.presentation.increase_counter.IncreaseCountersStatus
 import com.example.domain.presentation.Status
+import com.example.network.internet_connection.InternetConnectionRepository
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.layout_counter_content.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), KoinComponent {
 
     /* */
     private val binding: HomeFragmentBinding by lazy {
@@ -41,6 +45,9 @@ class HomeFragment : Fragment() {
             lifecycleOwner = this@HomeFragment
         }
     }
+
+    /* */
+    private val internetConnectionRepository: InternetConnectionRepository by inject()
 
     /* */
     private val homeViewModel: HomeViewModel by viewModel()
@@ -118,7 +125,10 @@ class HomeFragment : Fragment() {
 
         /** */
         override fun onIncreaseCounterClickListener(counterModifier: CounterModifier) {
-            executeIncreaseCounter(counterModifier.id)
+            if (internetConnectionRepository.isOnline) {
+                executeIncreaseCounter(counterModifier.id)
+            } else
+                modifierCounterDialogAlert(counterModifier.toCounter())
         }
 
         /** */
@@ -376,6 +386,7 @@ class HomeFragment : Fragment() {
             .forEach {
                 it.isSelected = false
             }
+        countersAdapter.notifyDataSetChanged()
     }
 
     /** */
@@ -402,6 +413,35 @@ class HomeFragment : Fragment() {
     private fun positiveDeleteDialogDialog(id: String) {
         actionMode?.finish()
         executeDeleteCounter(id)
+    }
+
+    /** */
+    private fun modifierCounterDialogAlert(counter: Counter) {
+        val title: String = getString(
+            R.string.error_updating_counter_title,
+            counter.title, counter.count + 1
+        )
+        val message = R.string.connection_error_description
+        val action = ::retryIncrementCounterDialog
+        MaterialAlertDialogBuilder(requireContext(), R.style.Theme_Dialog)
+            .setTitle(title)
+            .setMessage(message)
+            .setNegativeButton(R.string.retry) { dialog, _ ->
+                action.invoke(counter.id)
+                dialog.dismiss()
+            }
+            .setPositiveButton(R.string.dismiss) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
+    }
+
+    /** */
+    private fun retryIncrementCounterDialog(id: String) {
+        actionMode?.finish()
+        executeIncreaseCounter(id)
     }
 
 }

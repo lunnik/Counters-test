@@ -2,7 +2,6 @@ package com.example.counters.data.data_source.local
 
 import com.example.cache.data.local.dao.CounterDao
 import com.example.counters.data.CountersDataSource
-import com.example.counters.domain.CountersRepository
 import com.example.counters.domain.use_case.add_counter.AddCounterFailure
 import com.example.counters.domain.use_case.add_counter.AddCounterResponse
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure

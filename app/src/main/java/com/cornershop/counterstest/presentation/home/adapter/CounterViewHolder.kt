@@ -1,6 +1,7 @@
 package com.cornershop.counterstest.presentation.home.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +31,13 @@ class CounterViewHolder(
         binding.imageButtonPlus.setOnClickListener {
             onPlusClickListener(counterModifier, onActionClickListener)
         }
-        binding.root.setOnClickListener {
+        binding.root.setOnLongClickListener{
             onActionClickListener.onCounterClickListener(counterModifier)
+            true
         }
     }
 
+    /** */
     private fun isSelectItem(isSelected: Boolean) {
         if (isSelected) {
             binding.linearLayoutRoot.background =

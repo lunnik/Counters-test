@@ -11,8 +11,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 fun Fragment.showCommonDialog(
     @StringRes titleRes: Int = R.string.error_creating_counter_title,
     @StringRes contentRes: Int = R.string.connection_error_description,
-    @StringRes negativeActionRes: Int = R.string.ok,
-    @StringRes positiveActionRes: Int = R.string.cancel,
+    @StringRes negativeActionRes: Int = R.string.cancel,
+    @StringRes positiveActionRes: Int = R.string.ok,
     negativeAction: (() -> Unit)? = null,
     positiveAction: () -> Unit,
 ) {

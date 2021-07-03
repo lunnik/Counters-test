@@ -20,40 +20,41 @@ import org.koin.standalone.KoinComponent
 
 /** */
 internal class CountersRepositoryImpl(
-    countersDataSourceRemote: CountersDataSourceRemote,
-    counterDataSourceLocal: CountersDataSourceLocal,
-    countersDataSourceDummy: CountersDataSourceDummy,
+    private val countersDataSourceRemote: CountersDataSourceRemote,
+    private val counterDataSourceLocal: CountersDataSourceLocal,
+    private val countersDataSourceDummy: CountersDataSourceDummy,
     internetConnectionRepository: InternetConnectionRepository
 ) : CountersRepository,
     InternetConnectionRepository by internetConnectionRepository, KoinComponent {
 
-    private val countersDataSource: CountersDataSource =
+    /** */
+    private fun getCountersDataSource(): CountersDataSource =
         if (isOnline) countersDataSourceRemote else counterDataSourceLocal
 
     /** */
     override suspend fun getCounters():
             Either<GetCountersFailure, GetCountersResponse> =
-        countersDataSource.getCounters()
+        getCountersDataSource().getCounters()
 
     /** */
     override suspend fun increaseCounters(id: String):
             Either<IncreaseCounterFailure, IncreaseCounterResponse> =
-        countersDataSource.increaseCounters(id)
+        getCountersDataSource().increaseCounters(id)
 
     /** */
     override suspend fun decreaseCounters(id: String):
             Either<DecreaseCounterFailure, DecreaseCounterResponse> =
-        countersDataSource.decreaseCounters(id)
+        getCountersDataSource().decreaseCounters(id)
 
     /** */
     override suspend fun deleteCounters(id: String):
             Either<DeleteCounterFailure, DeleteCounterResponse> =
-        countersDataSource.deleteCounters(id)
+        getCountersDataSource().deleteCounters(id)
 
     /** */
     override suspend fun addCounters(title: String):
             Either<AddCounterFailure, AddCounterResponse> =
-        countersDataSource.addCounters(title)
+        getCountersDataSource().addCounters(title)
 
 
 }
