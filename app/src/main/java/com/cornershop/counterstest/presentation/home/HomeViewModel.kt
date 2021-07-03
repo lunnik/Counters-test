@@ -3,7 +3,6 @@ package com.cornershop.counterstest.presentation.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
-import com.example.cache.presentation.get_counters_by_title.GetCounterByTitle
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterParams
 import com.example.counters.domain.use_case.delete_counter.DeleteCounterParams
 import com.example.counters.domain.use_case.get_counters.GetCountersParams

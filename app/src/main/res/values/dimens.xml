@@ -28,6 +28,7 @@
     <dimen name="padding_help_touch">8dp</dimen>
 
     <!--View holder-->
-    <dimen name="margin_vertical_view_holder">20dp</dimen>
+    <dimen name="margin_vertical_view_holder">10dp</dimen>
     <dimen name="space_view_holder_widget">20dp</dimen>
+    <dimen name="view_holder_size_height">67dp</dimen>
 </resources>

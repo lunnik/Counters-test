@@ -12,8 +12,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/linear_layout_root"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/view_holder_size_height"
+        android:layout_marginHorizontal="@dimen/margin_lateral"
         android:layout_marginVertical="@dimen/margin_vertical_view_holder"
+        android:foreground="?selectableItemBackgroundBorderless"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -22,9 +24,8 @@
             style="@style/AppTheme.TextView.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="6"
             android:maxLines="3"
-            android:paddingStart="@dimen/half_lateral"
             android:text="@{counter.title}"
             android:textSize="17sp"
             tools:text="@string/add_counter_text_place_holder_hint" />
@@ -34,15 +35,14 @@
             android:id="@+id/content_control_counters"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:paddingEnd="@dimen/half_lateral">
+            android:layout_weight="4"
+            android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/image_button_minus"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:foreground="?selectableItemBackgroundBorderless"
                 android:padding="@dimen/padding_help_touch"
@@ -55,13 +55,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_view_holder_widget"
+                android:gravity="center"
+                android:lines="1"
+                android:layout_weight="1"
                 android:text="@{String.valueOf(counter.count)}"
                 tools:text="1" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/image_button_plus"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:foreground="?selectableItemBackgroundBorderless"
                 android:padding="@dimen/padding_help_touch"
@@ -75,7 +79,7 @@
             android:id="@+id/image_view_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/half_lateral"
+            android:layout_marginEnd="@dimen/half_lateral"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_check" />
 
