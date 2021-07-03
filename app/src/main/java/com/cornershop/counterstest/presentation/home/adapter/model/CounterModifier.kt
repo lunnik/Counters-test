@@ -6,7 +6,8 @@ import com.example.cache.domain.entity.Counter
 data class CounterModifier(
     val id: String,
     val count: Int,
-    val title: String
+    val title: String,
+    var isSelected: Boolean
 ) {
 
     /** */
@@ -19,7 +20,8 @@ data class CounterModifier(
         fun fromCounter(it: Counter) = CounterModifier(
             id = it.id,
             count = it.count,
-            title = it.title
+            title = it.title,
+            isSelected = false
         )
 
     }

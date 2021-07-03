@@ -1,10 +1,8 @@
 package com.cornershop.counterstest.presentation.home
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,9 +20,11 @@ import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifi
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
 import com.example.cache.domain.entity.Counter
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
+import com.example.counters.domain.use_case.delete_counter.DeleteCounterFailure
 import com.example.counters.domain.use_case.get_counters.GetCountersFailure
 import com.example.counters.domain.use_case.increase_counter.IncreaseCounterFailure
 import com.example.counters.presentation.decrease_counter.DecreaseCountersStatus
+import com.example.counters.presentation.delete_counter.DeleteCountersStatus
 import com.example.counters.presentation.get_counters.GetCountersStatus
 import com.example.counters.presentation.increase_counter.IncreaseCountersStatus
 import com.example.domain.presentation.Status
@@ -46,6 +46,9 @@ class HomeFragment : Fragment() {
     /* */
     private lateinit var countersAdapter: CountersAdapter
 
+    /* */
+    private var actionMode: ActionMode? = null
+
     /** */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +69,7 @@ class HomeFragment : Fragment() {
         setupAction()
         initRecyclerView()
     }
+
     /** */
     private fun setupPullToRefreshCounters() {
         binding.swipeRefreshCounters.setOnRefreshListener(::execute)
@@ -85,6 +89,7 @@ class HomeFragment : Fragment() {
 
     /** */
     private fun onActionAddCounterClickListener(v: View) {
+        actionMode?.finish()
         findNavController().navigate(R.id.action_homeFragment_to_addCounterFragment)
     }
 
@@ -99,9 +104,9 @@ class HomeFragment : Fragment() {
 
     /** */
     private val counterActionListener = object : CounterActionListener {
-
+        /** */
         override fun onCounterClickListener(counterModifier: CounterModifier) {
-            //TODO("Not yet implemented")
+            setupMenuActionCounter(counterModifier)
         }
 
         /** */
@@ -116,8 +121,25 @@ class HomeFragment : Fragment() {
 
         /** */
         override fun onDeleteActionListener(counterModifier: CounterModifier) {
-            //TODO("Not yet implemented")
+            executeDeleteCounter(counterModifier.id)
         }
+    }
+
+    /** */
+    private fun setupMenuActionCounter(counterModifier: CounterModifier) {
+        val index = countersAdapter.currentList.indexOf(counterModifier)
+        val item = countersAdapter.currentList[index]
+        item.isSelected = !item.isSelected
+        countersAdapter.notifyItemChanged(index)
+        setupActionMode()
+
+    }
+
+    private fun setupActionMode() {
+        val counters = countersAdapter.currentList.filter { it.isSelected }
+        if (actionMode == null) actionMode = requireActivity().startActionMode(ActionModeCallback())
+        if (counters.isNotEmpty()) actionMode?.title = getString(R.string.n_selected, counters.size)
+        else actionMode?.finish()
     }
 
     //INCREMENT COUNTER
@@ -203,6 +225,7 @@ class HomeFragment : Fragment() {
 
     /** */
     private fun hideProgress() {
+        actionMode = null
         binding.swipeRefreshCounters.isRefreshing = false
         hideProgressDialog()
     }
@@ -240,6 +263,91 @@ class HomeFragment : Fragment() {
             binding.includeLayoutContent.text_view_items_time.text =
                 getString(R.string.n_times, totalTime)
         }
+    }
+
+    //DELETE COUNTER
+
+    /** */
+    private fun executeDeleteCounter(id: String) {
+        homeViewModel.deleteCountersAsLiveData(id)
+            .observe(viewLifecycleOwner, createDeleteCounterObserver())
+    }
+
+    /** */
+    private fun createDeleteCounterObserver() = Observer<DeleteCountersStatus> {
+        hideProgressDialog()
+        when (it) {
+            is Status.Loading -> showProgressDialog()
+            is Status.Failed -> manageDeleteCounterFailure(it.failure)
+            is Status.Done -> manageGetCountersDone(it.value.counters)
+        }
+    }
+
+    /** */
+    private fun manageDeleteCounterFailure(failure: DeleteCounterFailure) {
+        when (failure) {
+            DeleteCounterFailure.NetworkConnectionFailure -> {
+                showCommonDialog(positiveAction = ::positiveActionDialog)
+            }
+            else -> {
+                val message = getCommonFailureMessage(failure)
+                showSnackBar(message)
+            }
+        }
+
+    }
+
+    //MENU ACTION MODE
+
+    /** */
+    inner class ActionModeCallback : ActionMode.Callback {
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            when (item?.itemId) {
+                R.id.action_delete -> {
+                    deleteCounterByToolbar()
+                    return true
+                }
+            }
+            return false
+        }
+
+        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            val inflater = mode?.menuInflater
+            inflater?.inflate(R.menu.action_mode_menu, menu)
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            menu?.findItem(R.id.action_delete)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            return true
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            actionMode = null
+            clearSelectedCounters()
+        }
+    }
+
+    /** */
+    private fun deleteCounterByToolbar() {
+        val listCounterSelection = countersAdapter.currentList
+            .filter { it.isSelected }
+            .map { it.toCounter() }
+        countersAdapter.notifyDataSetChanged()
+        if (listCounterSelection.size > 1)
+            showSnackBar(R.string.delete_counter_message_error)
+        else {
+            executeDeleteCounter(listCounterSelection.first().id)
+        }
+
+    }
+
+    /** */
+    private fun clearSelectedCounters() {
+        countersAdapter.currentList
+            .forEach {
+                it.isSelected = false
+            }
     }
 
     /** */

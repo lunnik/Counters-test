@@ -56,6 +56,7 @@
     <string name="add_counter_text_place_holder_hint">Cups of coffee</string>
     <string name="add_counter_text_hint">Name</string>
     <string name="add_counter_text_counter_created_done">Counter created</string>
+    <string name="delete_counter_message_error">Only one can be removed at a time</string>
 
     <!--common-->
     <string name="failure_message">Ups an error occurred: %s</string>

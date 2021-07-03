@@ -1,5 +1,6 @@
 package com.example.counters.data.data_source.remote
 
+import android.util.Log
 import com.example.cache.data.local.dao.CounterDao
 import com.example.data_source.data.exception.message
 import com.example.counters.data.CountersDataSource
@@ -92,6 +93,7 @@ internal class CountersDataSourceRemote(
                 Either.Right(DeleteCounterResponse(counters))
             }
         } catch (exception: Exception) {
+            Log.e("exception",exception.toString())
             val failure: DeleteCounterFailure = when (exception) {
                 is HttpException -> exception.toDeleteCounterFailure()
                 else -> DeleteCounterFailure.UnknownFailure(exception.message())

@@ -2,8 +2,12 @@ package com.cornershop.counterstest.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.cornershop.counterstest.R
 import com.cornershop.counterstest.databinding.ViewHolderCountersBinding
+import com.cornershop.counterstest.presentation.common.extension.android.view.gone
+import com.cornershop.counterstest.presentation.common.extension.android.view.visible
 import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
 
@@ -11,6 +15,7 @@ class CounterViewHolder(
     var binding: ViewHolderCountersBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private val context = binding.root.context
 
     /** */
     fun bind(
@@ -18,11 +23,28 @@ class CounterViewHolder(
         onActionClickListener: CounterActionListener
     ) {
         binding.counter = counterModifier
+        isSelectItem(counterModifier.isSelected)
         binding.imageButtonMinus.setOnClickListener {
             onMinusClickListener(counterModifier, onActionClickListener)
         }
         binding.imageButtonPlus.setOnClickListener {
             onPlusClickListener(counterModifier, onActionClickListener)
+        }
+        binding.root.setOnClickListener {
+            onActionClickListener.onCounterClickListener(counterModifier)
+        }
+    }
+
+    private fun isSelectItem(isSelected: Boolean) {
+        if (isSelected) {
+            binding.linearLayoutRoot.background =
+                context.getDrawable(R.drawable.ic_background_item_selected)
+            binding.contentControlCounters.gone()
+            binding.imageViewCheck.visible()
+        } else {
+            binding.linearLayoutRoot.background = null
+            binding.contentControlCounters.visible()
+            binding.imageViewCheck.gone()
         }
     }
 
@@ -40,8 +62,10 @@ class CounterViewHolder(
         counterModifier: CounterModifier,
         onActionClickListener: CounterActionListener?
     ) {
-        if (counterModifier.count == 0)
+        if (counterModifier.count == 0) {
             onDeleteActionListener(counterModifier, onActionClickListener)
+            return
+        }
         counterModifier.count - 1
         onActionClickListener?.onDecreaseCounterClickListener(counterModifier)
     }

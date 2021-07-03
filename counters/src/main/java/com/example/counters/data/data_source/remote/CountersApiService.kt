@@ -6,10 +6,7 @@ import com.example.counters.data.data_source.remote.model.DeleteCounterRequest
 import com.example.counters.data.data_source.remote.model.IncreaseCounterRequest
 import com.example.counters.data.data_source.remote.model.dto.CounterDto
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /* */
 internal interface CountersApiService {
@@ -19,19 +16,19 @@ internal interface CountersApiService {
     suspend fun getCounters(): Response<List<CounterDto>>
 
     /** */
-    @POST(URL.GET_INC)
+    @POST(URL.INC_COUNTER)
     suspend fun increaseCounter(
         @Body request: IncreaseCounterRequest
     ): Response<List<CounterDto>>
 
     /** */
-    @POST(URL.GET_DEC)
+    @POST(URL.DEC_COUNTER)
     suspend fun decreaseCounter(
         @Body request: DecreaseCounterRequest
     ): Response<List<CounterDto>>
 
     /** */
-    @DELETE(URL.GET_DELETE)
+    @HTTP(method = "DELETE", path = URL.DELETE_COUNTER, hasBody = true)
     suspend fun deleteCounter(
         @Body request: DeleteCounterRequest
     ): Response<List<CounterDto>>
@@ -49,13 +46,13 @@ internal interface CountersApiService {
         const val GET_COUNTERS: String = "counters"
 
         /* */
-        const val GET_INC: String = "counter/inc"
+        const val INC_COUNTER: String = "counter/inc"
 
         /* */
-        const val GET_DEC: String = "counter/dec"
+        const val DEC_COUNTER: String = "counter/dec"
 
         /* */
-        const val GET_DELETE: String = "counter"
+        const val DELETE_COUNTER: String = "counter"
 
         /* */
         const val ADD_DELETE: String = "counter"

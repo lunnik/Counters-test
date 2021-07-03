@@ -15,7 +15,8 @@ val homeModule: Module = module {
         HomeViewModel(
             getCounters = get(),
             increaseCounter = get(),
-            decreaseCounter = get()
+            decreaseCounter = get(),
+            deleteCounter = get()
         )
     }
 
