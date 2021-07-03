@@ -1,0 +1,9 @@
+package com.example.cache.domain.use_case.get_counters
+
+import com.example.cache.domain.entity.Counter
+
+
+/** */
+data class GetCountersResponse(
+    val counters: List<Counter>
+)

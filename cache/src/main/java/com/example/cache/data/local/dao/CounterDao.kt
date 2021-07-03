@@ -1,9 +1,6 @@
 package com.example.cache.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.cache.domain.entity.Counter
 
 @Dao
@@ -16,5 +13,16 @@ interface CounterDao {
     /** */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addCounters(counters: List<Counter>)
+
+    @Delete
+    suspend fun deleteCounter(counters:Counter)
+
+    /** */
+    @Update
+    suspend fun updateCounter(counters:Counter)
+
+    /** */
+    @Query("SELECT * FROM Counter WHERE title=:title ")
+    suspend fun getCountersByTitle(title:String): List<Counter>
 
 }

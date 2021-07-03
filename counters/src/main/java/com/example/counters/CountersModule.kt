@@ -2,6 +2,8 @@ package com.example.counters
 
 import com.example.counters.data.CountersDataSource
 import com.example.counters.data.CountersRepositoryImpl
+import com.example.counters.data.data_source.dummy.CountersDataSourceDummy
+import com.example.counters.data.data_source.local.CountersDataSourceLocal
 import com.example.counters.data.data_source.remote.CountersApiService
 import com.example.counters.data.data_source.remote.CountersDataSourceRemote
 import com.example.counters.domain.CountersRepository
@@ -42,7 +44,9 @@ val countersModule = module {
     /** REPOSITORY **/
     single<CountersRepository> {
         CountersRepositoryImpl(
-            countersDataSource = get(),
+            countersDataSourceRemote = get(),
+            counterDataSourceLocal = get(),
+            countersDataSourceDummy = get(),
             internetConnectionRepository = get()
         )
     }
@@ -51,6 +55,9 @@ val countersModule = module {
     single<CountersDataSource> {
         CountersDataSourceRemote(countersApiService = get(), counterDao = get())
     }
+    single { CountersDataSourceDummy() }
+    single { CountersDataSourceRemote(countersApiService = get(), counterDao = get()) }
+    single { CountersDataSourceLocal(counterDao = get()) }
 
     /** API SERVICE **/
     single<CountersApiService> {

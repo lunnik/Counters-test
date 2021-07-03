@@ -1,5 +1,8 @@
 package com.example.counters.data
 
+import com.example.counters.data.data_source.dummy.CountersDataSourceDummy
+import com.example.counters.data.data_source.local.CountersDataSourceLocal
+import com.example.counters.data.data_source.remote.CountersDataSourceRemote
 import com.example.counters.domain.CountersRepository
 import com.example.counters.domain.use_case.add_counter.AddCounterFailure
 import com.example.counters.domain.use_case.add_counter.AddCounterResponse
@@ -17,40 +20,40 @@ import org.koin.standalone.KoinComponent
 
 /** */
 internal class CountersRepositoryImpl(
-    private val countersDataSource: CountersDataSource,
+    countersDataSourceRemote: CountersDataSourceRemote,
+    counterDataSourceLocal: CountersDataSourceLocal,
+    countersDataSourceDummy: CountersDataSourceDummy,
     internetConnectionRepository: InternetConnectionRepository
 ) : CountersRepository,
     InternetConnectionRepository by internetConnectionRepository, KoinComponent {
 
-    /** */
-    override suspend fun getCounters(): Either<GetCountersFailure, GetCountersResponse> =
-        if (isOnline)
-            countersDataSource.getCounters()
-        else Either.Left(GetCountersFailure.NetworkConnectionFailure)
+    private val countersDataSource: CountersDataSource =
+        if (isOnline) countersDataSourceRemote else counterDataSourceLocal
 
     /** */
-    override suspend fun increaseCounters(id:String): Either<IncreaseCounterFailure, IncreaseCounterResponse> =
-        if (isOnline)
-            countersDataSource.increaseCounters(id)
-        else Either.Left(IncreaseCounterFailure.NetworkConnectionFailure)
+    override suspend fun getCounters():
+            Either<GetCountersFailure, GetCountersResponse> =
+        countersDataSource.getCounters()
 
     /** */
-    override suspend fun decreaseCounters(id:String): Either<DecreaseCounterFailure, DecreaseCounterResponse> =
-        if (isOnline)
-            countersDataSource.decreaseCounters(id)
-        else Either.Left(DecreaseCounterFailure.NetworkConnectionFailure)
+    override suspend fun increaseCounters(id: String):
+            Either<IncreaseCounterFailure, IncreaseCounterResponse> =
+        countersDataSource.increaseCounters(id)
 
     /** */
-    override suspend fun deleteCounters(id:String): Either<DeleteCounterFailure, DeleteCounterResponse> =
-        if (isOnline)
-            countersDataSource.deleteCounters(id)
-        else Either.Left(DeleteCounterFailure.NetworkConnectionFailure)
+    override suspend fun decreaseCounters(id: String):
+            Either<DecreaseCounterFailure, DecreaseCounterResponse> =
+        countersDataSource.decreaseCounters(id)
 
     /** */
-    override suspend fun addCounters(title:String): Either<AddCounterFailure, AddCounterResponse> =
-        if (isOnline)
-            countersDataSource.addCounters(title)
-        else Either.Left(AddCounterFailure.NetworkConnectionFailure)
+    override suspend fun deleteCounters(id: String):
+            Either<DeleteCounterFailure, DeleteCounterResponse> =
+        countersDataSource.deleteCounters(id)
+
+    /** */
+    override suspend fun addCounters(title: String):
+            Either<AddCounterFailure, AddCounterResponse> =
+        countersDataSource.addCounters(title)
 
 
 }

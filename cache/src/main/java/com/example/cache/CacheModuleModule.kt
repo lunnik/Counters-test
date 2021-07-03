@@ -18,7 +18,7 @@ val cacheModule : Module = module  {
     /** REPOSITORY **/
     single<CounterRepository> {
         CounterDataSourceImpl(
-            athleteActivityDataSource = get()
+            counterDataSource = get()
         )
     }
 
