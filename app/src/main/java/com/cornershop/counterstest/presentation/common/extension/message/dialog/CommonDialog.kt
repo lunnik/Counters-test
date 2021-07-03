@@ -49,6 +49,30 @@ fun Context.showCommonDialog(
     dialogBuilder.create().show()
 }
 
+
+/** */
+fun Context.showCommonDialog(
+   titleRes: String ,
+    @StringRes negativeActionRes: Int = R.string.ok,
+    @StringRes positiveActionRes: Int = R.string.cancel,
+    negativeAction: (() -> Unit)? = null,
+    positiveAction: () -> Unit,
+) {
+    val dialogBuilder = MaterialAlertDialogBuilder(this, R.style.Theme_Dialog)
+        .setTitle(titleRes)
+        .setPositiveButton(positiveActionRes, buildDialogInterfaceOnClickListener(positiveAction))
+        .setCancelable(false)
+    negativeAction?.apply {
+        dialogBuilder.setNegativeButton(
+            negativeActionRes,
+            buildDialogInterfaceOnClickListener(negativeAction)
+        )
+    }
+    dialogBuilder.create().show()
+}
+
+
+
 /* */
 private fun buildDialogInterfaceOnClickListener(action: (() -> Unit)? = null) =
     DialogInterface.OnClickListener { dialog, _ ->

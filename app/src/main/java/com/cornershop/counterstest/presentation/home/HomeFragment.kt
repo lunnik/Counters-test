@@ -1,5 +1,6 @@
 package com.cornershop.counterstest.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ import com.example.counters.presentation.delete_counter.DeleteCountersStatus
 import com.example.counters.presentation.get_counters.GetCountersStatus
 import com.example.counters.presentation.increase_counter.IncreaseCountersStatus
 import com.example.domain.presentation.Status
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.layout_counter_content.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -121,7 +123,7 @@ class HomeFragment : Fragment() {
 
         /** */
         override fun onDeleteActionListener(counterModifier: CounterModifier) {
-            executeDeleteCounter(counterModifier.id)
+            deleteCounterDialogAlert(counterModifier.title, counterModifier.id)
         }
     }
 
@@ -297,6 +299,11 @@ class HomeFragment : Fragment() {
 
     }
 
+    /** */
+    private fun positiveActionDialog() {
+        /*NOTHING*/
+    }
+
     //MENU ACTION MODE
 
     /** */
@@ -306,6 +313,10 @@ class HomeFragment : Fragment() {
                 R.id.action_delete -> {
                     deleteCounterByToolbar()
                     return true
+                }
+
+                R.id.action_shared -> {
+                    onShareCounterByToolbar()
                 }
             }
             return false
@@ -329,15 +340,32 @@ class HomeFragment : Fragment() {
     }
 
     /** */
+    private fun onShareCounterByToolbar() {
+        val listCounterSelection = countersAdapter.currentList
+            .filter { it.isSelected }
+            .map { it.toCounter() }
+
+        val counter = listCounterSelection.first()
+        val sharedCodeIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, counter.title)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sharedCodeIntent, null)
+        startActivity(shareIntent)
+    }
+
+
+    /** */
     private fun deleteCounterByToolbar() {
         val listCounterSelection = countersAdapter.currentList
             .filter { it.isSelected }
             .map { it.toCounter() }
-        countersAdapter.notifyDataSetChanged()
         if (listCounterSelection.size > 1)
             showSnackBar(R.string.delete_counter_message_error)
         else {
-            executeDeleteCounter(listCounterSelection.first().id)
+            val counter = listCounterSelection.first()
+            deleteCounterDialogAlert(counter.title, counter.id)
         }
 
     }
@@ -351,7 +379,29 @@ class HomeFragment : Fragment() {
     }
 
     /** */
-    private fun positiveActionDialog() {
-        /*NOTHING*/
+    private fun deleteCounterDialogAlert(name: String, id: String) {
+        val title: String = getString(
+            R.string.delete_x_question,
+            name
+        )
+
+        val action = ::positiveDeleteDialogDialog
+        MaterialAlertDialogBuilder(requireContext(), R.style.Theme_Dialog)
+            .setTitle(title)
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.delete) { dialog, _ ->
+                action.invoke(id)
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
     }
+
+    /** */
+    private fun positiveDeleteDialogDialog(id: String) {
+        actionMode?.finish()
+        executeDeleteCounter(id)
+    }
+
 }
