@@ -1,7 +1,6 @@
 package com.cornershop.counterstest.presentation.home.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -25,23 +24,35 @@ class CounterViewHolder(
     ) {
         binding.counter = counterModifier
         isSelectItem(counterModifier.isSelected)
+        manageButtonMinus(counterModifier.count)
         binding.imageButtonMinus.setOnClickListener {
             onMinusClickListener(counterModifier, onActionClickListener)
         }
         binding.imageButtonPlus.setOnClickListener {
             onPlusClickListener(counterModifier, onActionClickListener)
         }
-        binding.root.setOnLongClickListener{
+        binding.root.setOnLongClickListener {
             onActionClickListener.onCounterClickListener(counterModifier)
             true
         }
+    }
+
+    private fun manageButtonMinus(count: Int) {
+        if (count == 0)
+            binding.imageButtonMinus.setColorFilter(
+                ContextCompat.getColor(context, R.color.light_gray)
+            )
+        else
+            binding.imageButtonMinus.setColorFilter(
+                ContextCompat.getColor(context, R.color.orange)
+            )
     }
 
     /** */
     private fun isSelectItem(isSelected: Boolean) {
         if (isSelected) {
             binding.linearLayoutRoot.background =
-                context.getDrawable(R.drawable.ic_background_item_selected)
+                ContextCompat.getDrawable(context, R.drawable.ic_background_item_selected)
             binding.contentControlCounters.gone()
             binding.imageViewCheck.visible()
         } else {

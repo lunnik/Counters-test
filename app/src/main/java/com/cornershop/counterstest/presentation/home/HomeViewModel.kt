@@ -2,6 +2,8 @@ package com.cornershop.counterstest.presentation.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
+import com.example.cache.presentation.get_counters_by_title.GetCounterByTitle
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterParams
 import com.example.counters.domain.use_case.delete_counter.DeleteCounterParams
 import com.example.counters.domain.use_case.get_counters.GetCountersParams
@@ -26,6 +28,24 @@ class HomeViewModel(
     DecreaseCounter by decreaseCounter,
     DeleteCounter by deleteCounter {
 
+    /* */
+    private val filteredCounters: MutableList<CounterModifier> = mutableListOf()
+
+    /* */
+    val oldFilteredCounters: MutableList<CounterModifier> = mutableListOf()
+
+
+    /** */
+    fun search(query: String): List<CounterModifier> {
+        val wanted = oldFilteredCounters.filter {
+            it.title.contains(query)
+        }.toList()
+        filteredCounters.clear()
+        filteredCounters.addAll(wanted)
+        return filteredCounters
+    }
+
+
     /** */
     fun getCountersAsLiveData():
             LiveData<GetCountersStatus> {
@@ -49,6 +69,5 @@ class HomeViewModel(
         val params = DeleteCounterParams(id)
         return deleteCountersAsLiveData(params)
     }
-
 
 }

@@ -24,7 +24,7 @@
                     android:layout_marginHorizontal="@dimen/margin_lateral">
 
                     <androidx.appcompat.widget.SearchView
-                        android:id="@+id/search_view_users"
+                        android:id="@+id/search_view_counter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
@@ -64,6 +64,16 @@
                     <include
                         android:id="@+id/include_layout_content"
                         layout="@layout/layout_counter_content"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/include_layout_no_result"
+                        layout="@layout/layout_counter_no_result"
+                        android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/include_layout_error"
+                        layout="@layout/layout_counter_error"
                         android:visibility="gone" />
                 </FrameLayout>
 

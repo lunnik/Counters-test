@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,8 @@ import com.cornershop.counterstest.presentation.home.adapter.CountersAdapter
 import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
 import com.example.cache.domain.entity.Counter
+import com.example.cache.domain.use_case.get_counters_by_titile.GetCounterByTitleFailure
+import com.example.cache.presentation.get_counters_by_title.GetCountersByTitleStatus
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
 import com.example.counters.domain.use_case.delete_counter.DeleteCounterFailure
 import com.example.counters.domain.use_case.get_counters.GetCountersFailure
@@ -33,6 +36,7 @@ import com.example.domain.presentation.Status
 import com.example.network.internet_connection.InternetConnectionRepository
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.layout_counter_content.view.*
+import kotlinx.android.synthetic.main.layout_counter_error.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -76,12 +80,51 @@ class HomeFragment : Fragment(), KoinComponent {
         setupPullToRefreshCounters()
         setupToolbar()
         setupAction()
+        setupSearchView()
         initRecyclerView()
     }
 
     /** */
     private fun setupPullToRefreshCounters() {
         binding.swipeRefreshCounters.setOnRefreshListener(::execute)
+    }
+
+    /** */
+    private fun setupSearchView() {
+        binding.searchViewCounter.setOnQueryTextFocusChangeListener(onQueryTextFocusChangeListener)
+        binding.searchViewCounter.setOnQueryTextListener(onQueryTextListener)
+    }
+
+    private val onQueryTextFocusChangeListener =
+        View.OnFocusChangeListener { v, hasFocus ->
+
+        }
+
+    private val onQueryTextListener = object : SearchView.OnQueryTextListener {
+        /** */
+        override fun onQueryTextSubmit(query: String?): Boolean {
+
+            return true
+        }
+
+        /** */
+        override fun onQueryTextChange(newText: String?): Boolean {
+            newText?.let {
+                if (it.isNotEmpty()) {
+                    val filteredCounters = homeViewModel.search(it)
+                    if (filteredCounters.isEmpty())
+                        binding.includeLayoutNoResult.visible()
+                    countersAdapter.submitList(filteredCounters)
+                    countersAdapter.notifyDataSetChanged()
+                } else {
+                    binding.includeLayoutNoResult.gone()
+                    countersAdapter.submitList(homeViewModel.oldFilteredCounters)
+                    countersAdapter.notifyDataSetChanged()
+                }
+
+            }
+            return true
+        }
     }
 
     /** */
@@ -94,6 +137,7 @@ class HomeFragment : Fragment(), KoinComponent {
     /** */
     private fun setupAction() {
         binding.actionButtonAddCounters.setOnClickListener(::onActionAddCounterClickListener)
+        binding.includeLayoutError.text_view_retry.setOnClickListener(::onrRetryCounterClickListener)
     }
 
     /** */
@@ -101,6 +145,9 @@ class HomeFragment : Fragment(), KoinComponent {
         actionMode?.finish()
         findNavController().navigate(R.id.action_homeFragment_to_addCounterFragment)
     }
+
+    /** */
+    private fun onrRetryCounterClickListener(v: View) = execute()
 
 
     /** */
@@ -249,6 +296,7 @@ class HomeFragment : Fragment(), KoinComponent {
                 showCommonDialog(positiveAction = ::positiveActionDialog)
             }
             else -> {
+                binding.includeLayoutError.visible()
                 val message = getCommonFailureMessage(failure)
                 showSnackBar(message)
             }
@@ -258,10 +306,13 @@ class HomeFragment : Fragment(), KoinComponent {
 
     /** */
     private fun manageGetCountersDone(counter: List<Counter>) {
+        binding.includeLayoutError.gone()
         if (counter.isEmpty())
             binding.includeLayoutNoContent.visible()
         else {
             val listCounter = counter.map { CounterModifier.fromCounter(it) }
+            homeViewModel.oldFilteredCounters.clear()
+            homeViewModel.oldFilteredCounters.addAll(listCounter)
             countersAdapter.submitList(listCounter)
             binding.includeLayoutNoContent.gone()
             binding.includeLayoutContent.visible()
@@ -332,17 +383,20 @@ class HomeFragment : Fragment(), KoinComponent {
             return false
         }
 
+        /** */
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             val inflater = mode?.menuInflater
             inflater?.inflate(R.menu.action_mode_menu, menu)
             return true
         }
 
+        /** */
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             menu?.findItem(R.id.action_delete)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             return true
         }
 
+        /** */
         override fun onDestroyActionMode(mode: ActionMode?) {
             actionMode = null
             clearSelectedCounters()

@@ -42,9 +42,10 @@ class CountersDataSourceDummy : CountersDataSource {
 
     private fun getResponseCommon(): List<Counter> {
         val counter1 = Counter("12325", 0, "Cook")
-        val counter2 = Counter("12435", 1, "Coffe")
-        val counter3 = Counter("jd74e", 2, "Cook")
-        val counter4 = Counter("393je", 4, "Coffe")
-        return arrayListOf(counter1, counter2, counter3, counter4)
+        val counter2 = Counter("12435", 1, "cake")
+        val counter3 = Counter("jd74e", 3, "eggs")
+        val counter4 = Counter("393je", 5, "hot-dog")
+        val counter5 = Counter("393je", 4, "cereal")
+        return arrayListOf(counter1, counter2, counter3, counter4, counter5)
     }
 }

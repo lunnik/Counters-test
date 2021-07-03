@@ -1,5 +1,6 @@
 package com.example.cache.data.local
 
+import android.util.Log
 import com.example.data_source.data.exception.message
 import com.example.cache.data.CounterDataSource
 import com.example.cache.data.local.dao.CounterDao
@@ -58,8 +59,8 @@ class CounterDataSourceLocal(
     override suspend fun getCounterByTitle(title: String):
             Either<GetCounterByTitleFailure, GetCounterByTitleResponse> =
         try {
-            counterDao.getCountersByTitle(title)
-            Either.Right(GetCounterByTitleResponse)
+            val counters=counterDao.getCountersByTitle(title)
+            Either.Right(GetCounterByTitleResponse(counters))
         } catch (exception: Exception) {
             val failure = GetCounterByTitleFailure.UnknownFailure(exception.message())
             Either.Left(failure)
