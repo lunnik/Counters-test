@@ -17,6 +17,10 @@
         <item>Day dreaming</item>
     </string-array>
 
+    <string name="drinks_title">Drinks</string>
+    <string name="food_title">Food</string>
+    <string name="misc_title">Misc</string>
+
     <!-- Others -->
     <string name="app_name">Counters Test</string>
     <string name="welcome_title">Counters</string>
@@ -57,6 +61,7 @@
     <string name="add_counter_text_hint">Name</string>
     <string name="add_counter_text_counter_created_done">Counter created</string>
     <string name="delete_counter_message_error">Only one can be removed at a time</string>
+    <string name="selected_an_example">Select an example to add it to your counters.</string>
 
     <!--common-->
     <string name="failure_message">Ups an error occurred: %s</string>

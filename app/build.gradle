@@ -99,6 +99,8 @@ dependencies {
     implementation AndroidXNavigation.fragmentKtx
     implementation AndroidXNavigation.uiKtx
     implementation AndroidXNavigation.navigationUI
+    implementation AndroidXNavigation.fragments
+    debugImplementation AndroidXNavigation.fragmentTesting
 
     // Android X
     implementation AndroidX.constraintLayout

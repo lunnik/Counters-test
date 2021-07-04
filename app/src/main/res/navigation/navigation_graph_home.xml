@@ -17,5 +17,14 @@
         android:id="@+id/addCounterFragment"
         android:name="com.cornershop.counterstest.presentation.home.add_counter.AddCounterFragment"
         android:label="add_counter_fragment"
-        tools:layout="@layout/add_counter_fragment" />
+        tools:layout="@layout/add_counter_fragment" >
+        <action
+            android:id="@+id/action_addCounterFragment_to_createCounterExampleFragment"
+            app:destination="@id/createCounterExampleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createCounterExampleFragment"
+        android:name="com.cornershop.counterstest.presentation.home.create_counter_example.CreateCounterExampleFragment"
+        android:label="create_counter_example_fragment"
+        tools:layout="@layout/create_counter_example_fragment" />
 </navigation>

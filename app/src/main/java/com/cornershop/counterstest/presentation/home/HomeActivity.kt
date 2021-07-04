@@ -1,20 +1,15 @@
 package com.cornershop.counterstest.presentation.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import com.cornershop.counterstest.R
+import androidx.appcompat.app.AppCompatActivity
 import com.cornershop.counterstest.databinding.HomeActivityBinding
-import com.cornershop.counterstest.presentation.home.HomeFragment
 
 class HomeActivity : AppCompatActivity() {
 
     /* */
     private val binding: HomeActivityBinding
             by lazy { HomeActivityBinding.inflate(layoutInflater) }
-
 
     /** */
     override fun onCreate(savedInstanceState: Bundle?) {

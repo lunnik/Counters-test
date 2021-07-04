@@ -7,6 +7,9 @@ object AndroidXNavigation {
         /* */
         const val navigationVersion = "2.3.3"
 
+        /**/
+        const val fragment_version = "1.3.5"
+
     }
 
     /* */
@@ -22,5 +25,11 @@ object AndroidXNavigation {
 
     /* */
     const val navigationUI = "androidx.navigation:navigation-ui-ktx:${Version.navigationVersion}"
+
+    /* */
+    const val fragments = "androidx.fragment:fragment:${Version.fragment_version}"
+
+    /* */
+    const val fragmentTesting = "androidx.fragment:fragment-testing:${Version.fragment_version}"
 
 }

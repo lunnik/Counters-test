@@ -3,6 +3,7 @@ package com.cornershop.counterstest.presentation.home.add_counter
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.cornershop.counterstest.R
@@ -10,6 +11,7 @@ import com.cornershop.counterstest.databinding.AddCounterFragmentBinding
 import com.cornershop.counterstest.presentation.common.extension.android.input_valitator.counter.CounterFormatError
 import com.cornershop.counterstest.presentation.common.extension.android.input_valitator.counter.getMessage
 import com.cornershop.counterstest.presentation.common.extension.android.showSnackBar
+import com.cornershop.counterstest.presentation.common.extension.android.showToast
 import com.cornershop.counterstest.presentation.common.extension.android.view.setClearErrorListenerOnType
 import com.cornershop.counterstest.presentation.common.extension.android.view.setErrorMessage
 import com.cornershop.counterstest.presentation.common.extension.failure_manage.getCommonFailureMessage
@@ -17,7 +19,6 @@ import com.cornershop.counterstest.presentation.common.extension.loader.Progress
 import com.cornershop.counterstest.presentation.common.extension.loader.ProgressMenuItem.showProgressMenuItem
 import com.cornershop.counterstest.presentation.common.extension.message.dialog.showCommonDialog
 import com.example.counters.domain.use_case.add_counter.AddCounterFailure
-import com.example.counters.domain.use_case.get_counters.GetCountersFailure
 import com.example.counters.presentation.add_counter.AddCounterStatus
 import com.example.domain.Failure
 import com.example.domain.presentation.Status
@@ -50,12 +51,24 @@ class AddCounterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupView()
+        setupResultFromExample()
+    }
+
+    /** */
+    private fun setupResultFromExample() {
+        setFragmentResultListener(COUNTER_KEY_RESULT) { _, bundle ->
+            val result = bundle.getString(BUNDLE_KEY_COUNTER_TITLE)
+            result.let {
+                tiet_counter.setText(it)
+            }
+        }
     }
 
     /** */
     private fun setupView() {
         setupToolbar()
         setupTextChangeListener()
+        setupAction()
     }
 
     /** */
@@ -74,6 +87,16 @@ class AddCounterFragment : Fragment() {
             setOnMenuItemClickListener(::onMenuItemClickListener)
             this@AddCounterFragment.menu = menu
         }
+    }
+
+    /** */
+    private fun setupAction() {
+        binding.textViewExample.setOnClickListener(::navigateToCounterExample)
+    }
+
+    /** */
+    private fun navigateToCounterExample(v: View) {
+        findNavController().navigate(R.id.action_addCounterFragment_to_createCounterExampleFragment)
     }
 
     /** */
@@ -148,18 +171,30 @@ class AddCounterFragment : Fragment() {
         }
     }
 
+    /** */
     private fun positiveActionDialog() {
         /*NOTHING*/
     }
 
     /** */
     private fun manageAddCounterDone() {
-        showSnackBar(R.string.add_counter_text_counter_created_done)
-        tiet_counter.text?.clear()
+        showToast(R.string.add_counter_text_counter_created_done)
+        onBackPressed()
     }
 
+    /** */
     private fun onBackPressed() {
         findNavController().popBackStack()
+    }
+
+    /** */
+    companion object {
+
+        /* */
+        const val COUNTER_KEY_RESULT = "counter_key_result"
+
+        /* */
+        const val BUNDLE_KEY_COUNTER_TITLE = "bundle_key_counter_title"
     }
 
 

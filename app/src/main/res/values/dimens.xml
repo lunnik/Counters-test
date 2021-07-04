@@ -12,8 +12,9 @@
     <!--margin vertical-->
     <dimen name="half_lateral">8dp</dimen>
     <dimen name="margin_lateral">16dp</dimen>
-    <dimen name="double_lateral">16dp</dimen>
+    <dimen name="double_lateral">32dp</dimen>
     <dimen name="triple_margin_lateral">48dp</dimen>
+
 
     <!--button-->
     <dimen name="button_icon_size">16dp</dimen>
@@ -26,6 +27,7 @@
 
     <!--padding-->
     <dimen name="padding_help_touch">8dp</dimen>
+    <dimen name="padding_lateral">16dp</dimen>
 
     <!--View holder-->
     <dimen name="margin_vertical_view_holder">15dp</dimen>
