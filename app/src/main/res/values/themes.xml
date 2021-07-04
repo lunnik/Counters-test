@@ -10,13 +10,14 @@
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:textColorSecondary">@color/gray</item>
         <item name="android:textColorTertiary">@color/light_gray</item>
+        <item name="android:windowBackground">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorSecondary</item>
         <item name="textInputStyle">@style/Theme.TextInputLayout</item>
         <item name="android:progressBarStyle">@style/AppTheme.ProgressBar</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="actionModeCloseDrawable">@drawable/ic_close</item>
-        <item name="actionMenuTextColor">@color/gray</item>
+        <item name="actionMenuTextColor">@color/orange</item>
         <item name="actionModeSplitBackground">@color/orange</item>
     </style>
 

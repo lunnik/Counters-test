@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,80 +10,89 @@
             type="com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linear_layout_root"
         android:layout_width="match_parent"
         android:layout_height="@dimen/view_holder_size_height"
-        android:layout_marginHorizontal="@dimen/margin_lateral"
-        android:layout_marginVertical="@dimen/margin_vertical_view_holder"
+        android:layout_marginHorizontal="@dimen/view_holder_content_margin_lateral"
         android:foreground="?selectableItemBackgroundBorderless"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:gravity="center">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_view_name_counter"
-            style="@style/AppTheme.TextView.Title"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linear_layout_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:maxLines="3"
-            android:text="@{counter.title}"
-            android:textSize="17sp"
-            tools:text="@string/add_counter_text_place_holder_hint" />
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/content_control_counters"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:gravity="center">
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/image_button_minus"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="@dimen/padding_help_touch"
-                android:src="@drawable/ic_minus"
-                android:tint="@color/orange" />
+            android:layout_marginHorizontal="@dimen/margin_lateral_view_holder"
+            android:layout_marginVertical="@dimen/margin_vertical_view_holder"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_view_counter"
+                android:id="@+id/text_view_name_counter"
                 style="@style/AppTheme.TextView.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:maxLines="3"
+                android:text="@{counter.title}"
+                android:textSize="17sp"
+                tools:text="@string/add_counter_text_place_holder_hint" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/content_control_counters"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/image_button_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:padding="@dimen/padding_help_touch"
+                    android:src="@drawable/ic_minus"
+                    android:tint="@color/orange" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_view_counter"
+                    style="@style/AppTheme.TextView.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_view_holder_widget"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="@{String.valueOf(counter.count)}"
+                    tools:text="1" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/image_button_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:padding="@dimen/padding_help_touch"
+                    android:src="@drawable/ic_plus"
+                    android:tint="@color/orange" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_view_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_view_holder_widget"
-                android:gravity="center"
-                android:lines="1"
-                android:layout_weight="1"
-                android:text="@{String.valueOf(counter.count)}"
-                tools:text="1" />
+                android:layout_marginEnd="@dimen/half_lateral"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_check" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/image_button_plus"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="@dimen/padding_help_touch"
-                android:src="@drawable/ic_plus"
-                android:tint="@color/orange" />
+        </LinearLayout>
 
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_view_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/half_lateral"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_check" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

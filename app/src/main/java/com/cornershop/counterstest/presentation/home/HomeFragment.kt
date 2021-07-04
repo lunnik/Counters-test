@@ -2,8 +2,8 @@ package com.cornershop.counterstest.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,15 +15,11 @@ import com.cornershop.counterstest.presentation.common.extension.android.showSna
 import com.cornershop.counterstest.presentation.common.extension.android.view.gone
 import com.cornershop.counterstest.presentation.common.extension.android.view.visible
 import com.cornershop.counterstest.presentation.common.extension.failure_manage.getCommonFailureMessage
-import com.cornershop.counterstest.presentation.common.extension.loader.ProgressDialog.hideProgressDialog
-import com.cornershop.counterstest.presentation.common.extension.loader.ProgressDialog.showProgressDialog
 import com.cornershop.counterstest.presentation.common.extension.message.dialog.showCommonDialog
 import com.cornershop.counterstest.presentation.home.adapter.CountersAdapter
 import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifier
 import com.cornershop.counterstest.presentation.home.common.CounterActionListener
 import com.example.cache.domain.entity.Counter
-import com.example.cache.domain.use_case.get_counters_by_titile.GetCounterByTitleFailure
-import com.example.cache.presentation.get_counters_by_title.GetCountersByTitleStatus
 import com.example.counters.domain.use_case.decrease_counter.DecreaseCounterFailure
 import com.example.counters.domain.use_case.delete_counter.DeleteCounterFailure
 import com.example.counters.domain.use_case.get_counters.GetCountersFailure
@@ -48,6 +44,11 @@ class HomeFragment : Fragment(), KoinComponent {
         HomeFragmentBinding.inflate(layoutInflater).apply {
             lifecycleOwner = this@HomeFragment
         }
+    }
+
+    /* */
+    private val progressBar: ProgressBar by lazy {
+        binding.includeLayoutProgress.progressBar
     }
 
     /* */
@@ -91,39 +92,39 @@ class HomeFragment : Fragment(), KoinComponent {
 
     /** */
     private fun setupSearchView() {
-        binding.searchViewCounter.setOnQueryTextFocusChangeListener(onQueryTextFocusChangeListener)
         binding.searchViewCounter.setOnQueryTextListener(onQueryTextListener)
     }
 
-    private val onQueryTextFocusChangeListener =
-        View.OnFocusChangeListener { v, hasFocus ->
-
-        }
-
+    /** */
     private val onQueryTextListener = object : SearchView.OnQueryTextListener {
         /** */
         override fun onQueryTextSubmit(query: String?): Boolean {
-
-            return true
+            return false
         }
 
         /** */
         override fun onQueryTextChange(newText: String?): Boolean {
             newText?.let {
-                if (it.isNotEmpty()) {
-                    val filteredCounters = homeViewModel.search(it)
-                    if (filteredCounters.isEmpty())
-                        binding.includeLayoutNoResult.visible()
-                    countersAdapter.submitList(filteredCounters)
-                    countersAdapter.notifyDataSetChanged()
-                } else {
-                    binding.includeLayoutNoResult.gone()
-                    countersAdapter.submitList(homeViewModel.oldFilteredCounters)
-                    countersAdapter.notifyDataSetChanged()
-                }
-
+                manageQueryCounter(newText)
             }
-            return true
+            return false
+        }
+    }
+
+    /** */
+    private fun manageQueryCounter(title: String) {
+        if (homeViewModel.oldFilteredCounters.isEmpty())
+            return
+        if (title.isNotEmpty()) {
+            val filteredCounters = homeViewModel.search(title)
+            if (filteredCounters.isEmpty())
+                binding.includeLayoutNoResult.visible()
+            countersAdapter.submitList(filteredCounters)
+            countersAdapter.notifyDataSetChanged()
+        } else {
+            binding.includeLayoutNoResult.gone()
+            countersAdapter.submitList(homeViewModel.oldFilteredCounters)
+            countersAdapter.notifyDataSetChanged()
         }
     }
 
@@ -137,7 +138,7 @@ class HomeFragment : Fragment(), KoinComponent {
     /** */
     private fun setupAction() {
         binding.actionButtonAddCounters.setOnClickListener(::onActionAddCounterClickListener)
-        binding.includeLayoutError.text_view_retry.setOnClickListener(::onrRetryCounterClickListener)
+        binding.includeLayoutError.text_view_retry.setOnClickListener(::onRetryCounterClickListener)
     }
 
     /** */
@@ -147,7 +148,7 @@ class HomeFragment : Fragment(), KoinComponent {
     }
 
     /** */
-    private fun onrRetryCounterClickListener(v: View) = execute()
+    private fun onRetryCounterClickListener(v: View) = execute()
 
 
     /** */
@@ -158,10 +159,12 @@ class HomeFragment : Fragment(), KoinComponent {
         binding.includeLayoutContent.recycler_view_counter.adapter = countersAdapter
     }
 
+    //MANAGE ACTION COUNTERS
+
     /** */
     private val counterActionListener = object : CounterActionListener {
         /** */
-        override fun onCounterClickListener(counterModifier: CounterModifier) {
+        override fun onCounterLongClickListener(counterModifier: CounterModifier) {
             setupMenuActionCounter(counterModifier)
         }
 
@@ -202,6 +205,7 @@ class HomeFragment : Fragment(), KoinComponent {
     }
 
     //INCREMENT COUNTER
+
     /** */
     private fun executeIncreaseCounter(id: String) {
         homeViewModel.increaseCountersAsLiveData(id)
@@ -212,7 +216,7 @@ class HomeFragment : Fragment(), KoinComponent {
     private fun createIncreaseCounterObserver() = Observer<IncreaseCountersStatus> {
         hideProgressDialog()
         when (it) {
-            is Status.Loading -> showProgressDialog()
+            is Status.Loading -> showProgress()
             is Status.Failed -> manageIncreaseCounterFailure(it.failure)
             is Status.Done -> manageGetCountersDone(it.value.counters)
         }
@@ -244,7 +248,7 @@ class HomeFragment : Fragment(), KoinComponent {
     private fun createDecreaseCounterObserver() = Observer<DecreaseCountersStatus> {
         hideProgressDialog()
         when (it) {
-            is Status.Loading -> showProgressDialog()
+            is Status.Loading -> showProgress()
             is Status.Failed -> manageDecreaseCounterFailure(it.failure)
             is Status.Done -> manageGetCountersDone(it.value.counters)
         }
@@ -264,10 +268,18 @@ class HomeFragment : Fragment(), KoinComponent {
 
     }
 
-    //LOAD  COUNTERS
+    /** */
+    private fun hideLayoutAlerts() {
+        binding.includeLayoutError.gone()
+        binding.includeLayoutNoResult.gone()
+        binding.includeLayoutNoContent.gone()
+    }
+
+    //LOAD COUNTERS
 
     /** */
     private fun execute() {
+        hideLayoutAlerts()
         homeViewModel.getCountersAsLiveData()
             .observe(viewLifecycleOwner, createGetCountersStatusObserver())
     }
@@ -276,7 +288,7 @@ class HomeFragment : Fragment(), KoinComponent {
     private fun createGetCountersStatusObserver() = Observer<GetCountersStatus> {
         hideProgress()
         when (it) {
-            is Status.Loading -> showProgressDialog()
+            is Status.Loading -> showProgress()
             is Status.Failed -> manageGetCountersFailure(it.failure)
             is Status.Done -> manageGetCountersDone(it.value.counters)
         }
@@ -306,7 +318,7 @@ class HomeFragment : Fragment(), KoinComponent {
 
     /** */
     private fun manageGetCountersDone(counter: List<Counter>) {
-        binding.includeLayoutError.gone()
+        hideLayoutAlerts()
         if (counter.isEmpty())
             binding.includeLayoutNoContent.visible()
         else {
@@ -340,7 +352,7 @@ class HomeFragment : Fragment(), KoinComponent {
     private fun createDeleteCounterObserver() = Observer<DeleteCountersStatus> {
         hideProgressDialog()
         when (it) {
-            is Status.Loading -> showProgressDialog()
+            is Status.Loading -> showProgress()
             is Status.Failed -> manageDeleteCounterFailure(it.failure)
             is Status.Done -> manageGetCountersDone(it.value.counters)
         }
@@ -367,7 +379,11 @@ class HomeFragment : Fragment(), KoinComponent {
 
     //MENU ACTION MODE
 
-    /** */
+    // TODO IMPORTANT
+    /**
+     * The handling of batch deletion is limited because the service only
+     * accepts objects as parameters, you change the service to receive an array of objects
+     * */
     inner class ActionModeCallback : ActionMode.Callback {
         override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
             when (item?.itemId) {
@@ -497,5 +513,16 @@ class HomeFragment : Fragment(), KoinComponent {
         actionMode?.finish()
         executeIncreaseCounter(id)
     }
+
+    /** */
+    private fun hideProgressDialog() {
+        progressBar.gone()
+    }
+
+    /** */
+    private fun showProgress() {
+        progressBar.visible()
+    }
+
 
 }

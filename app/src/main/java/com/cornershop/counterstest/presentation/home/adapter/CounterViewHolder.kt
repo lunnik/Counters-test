@@ -32,7 +32,7 @@ class CounterViewHolder(
             onPlusClickListener(counterModifier, onActionClickListener)
         }
         binding.root.setOnLongClickListener {
-            onActionClickListener.onCounterClickListener(counterModifier)
+            onActionClickListener.onCounterLongClickListener(counterModifier)
             true
         }
     }

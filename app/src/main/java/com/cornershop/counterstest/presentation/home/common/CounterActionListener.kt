@@ -4,7 +4,7 @@ import com.cornershop.counterstest.presentation.home.adapter.model.CounterModifi
 
 interface CounterActionListener {
 
-    fun onCounterClickListener(counterModifier: CounterModifier)
+    fun onCounterLongClickListener(counterModifier: CounterModifier)
 
     /** */
     fun onDecreaseCounterClickListener(counterModifier: CounterModifier)

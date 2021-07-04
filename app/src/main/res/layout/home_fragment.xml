@@ -74,6 +74,10 @@
                         android:id="@+id/include_layout_error"
                         layout="@layout/layout_counter_error"
                         android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/include_layout_progress"
+                        layout="@layout/layout_progress_bar_circle" />
                 </FrameLayout>
 
 
@@ -86,15 +90,15 @@
             style="@style/AppTheme.Button.Solid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/margin_vertical"
             android:contentDescription="@null"
-            app:layout_anchorGravity="bottom"
             android:text="@string/add_counters"
             app:icon="@drawable/ic_plus"
             app:iconSize="@dimen/button_icon_size"
-            app:iconTint="@color/white" />
+            app:iconTint="@color/white"
+            app:layout_anchorGravity="bottom"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
